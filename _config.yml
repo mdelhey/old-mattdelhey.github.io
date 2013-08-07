@@ -1,5 +1,5 @@
 name: mattdelhey.com
-description: Man is spirit...
+description: man is spirit. but what is spirit?
 
 permalink: /:year/:month/:day/:title/
 paginate: 10
