@@ -3,7 +3,7 @@
 <head>
 
   <meta charset="UTF-8">
-  <title>France Removes Internet Cut-Off Threat From its Anti-Piracy Law</title>
+  <title>{{ page.title }}</title>
   <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
@@ -20,8 +20,8 @@
 
 
   <header id="header">
-    <h1><a href="/"><i class="icon-sun"></i> mattdelhey.com</a></h1>
-    <p>Man is spirit...</p>
+    <h1><a href="/"><i class="icon-sun"></i> {{ site.name }}</a></h1>
+    <p>{{ site.description }}</p>
   </header>
 
 
@@ -45,20 +45,7 @@
 
 
     <div id="content">
-      <article class="post">
-
-	
-		<h1>
-			<a href="http://arstechnica.com/tech-policy/2013/06/france-removes-internet-cut-off-threat-from-its-anti-piracy-law/">France Removes Internet Cut-Off Threat From its Anti-Piracy Law</a> 
-			<a class="anchor" href="/2013/06/05/france-removes-internet-cut-off/"><i class="icon-anchor"></i></a>
-		</h1>
-	
-
-	<div class="post-content"></div>
-
-	<p class="meta">Posted on <span class="postdate">Jun 05, 2013</span></p>
-
-</article>
+      {{ content }}
     </div>
 
 
@@ -68,7 +55,7 @@
 
 
   <footer id="footer">
-    <p class="copyright">Copyright &copy; 2013 mattdelhey.com. Powered by <a href="http://jekyllrb.com">Jekyll</a>.</p>
+    <p class="copyright">Copyright &copy; {{ site.time | date: '%Y' }} {{ site.name }}. Powered by <a href="http://jekyllrb.com">Jekyll</a>.</p>
   </footer>
 
 
