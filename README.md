@@ -3,4 +3,4 @@ Personal blog created with jekyll using solarized theme by [redwallhp][github.co
 
 Originally hosted using Ruhoh and themed by modifiying dinky.
 
-If you have a must-answer quesiton regarding me you can contact me at <a href="matt.delhey@rice.edu">matt.delhey@rice.edu</a>.
+Questions can be directed to [matt.delhey@rice.edu][matt.delhey@rice.edu].
