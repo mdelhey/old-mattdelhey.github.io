@@ -1,9 +1,0 @@
-name: mattdelhey.com
-url: http://mattdelhey.com
-description: Man is spirit...
-
-permalink: /:year/:month/:day/:title/
-paginate: 10
-pygments: true
-
-exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
