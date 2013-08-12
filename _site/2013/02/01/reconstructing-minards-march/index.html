@@ -1,0 +1,43 @@
+<p><img alt='original_minard' src='/images/original_minard.jpg' /></p>
+
+<p>Above is perhaps one the most famous statistical graphics ever created, found in nearly every history text-book (at least the ones I read&#8230;) that discusses Napoleon&#8217;s failed invasions of Russia in 1812. The graphic was originally created by <a href='http://en.wikipedia.org/wiki/Charles_Joseph_Minard'>Charles Joseph Minard</a>, a statistician ahead of his time.</p>
+
+<p>The reason this graphic is so good is that it tells a story for the viewer allowing us to visualize the march. By following along the graphic, we get a real feel for just how bad Napoleon&#8217;s march must have been. My favorite observation is how the number of troops about halves every time the army crosses a river&#8211; something that must of been pretty treacherous in the freezing temperatures.</p>
+
+<h3 id='representing_the_march_with_ggplot2'>Representing the march with ggplot2</h3>
+
+<p>We want to represent the above graphic using ggplot2&#8217;s grammar of graphics. In order to do this, we need to determine the layers that we want to create, what data is required for each layer, and what geometries we need to represent the data like Minard. So let&#8217;s break down each variable utilized in Minard&#8217;s graphic and convert them to layers we can implement using ggplot2:</p>
+
+<ul>
+<li>Map of Russia, including names of cities. Created using the <em>map</em> package &amp; geom_polygon and a text file containing city names with location &amp; geom_text.</li>
+
+<li>The number of troops. This is mapped to the size of the line using geom_path.</li>
+
+<li>Direction of the army, represented by the tan/black colors and including information on the split and re-joining. Mapped using the color and lineend properties of geom_path.</li>
+
+<li><strong>Missing:</strong> the temperature and dates of the troops as they made their way across Russia. This data could reasonably be added by superimposing geom_line and geom_point layers on the bottom of the plot.</li>
+
+<li><strong>Also Missing:</strong> geographical information for the map of Russia, including Rivers, etc.</li>
+</ul>
+
+<p>Luckily, the data needed for the non-missing variables is all easily obtainable. The troop and city data is provided by Hadley Wickham on his <a href='http://stat405.had.co.nz/'>stat405 website</a> (from which I got this example) and the map data is available from the maps package.</p>
+
+<h3 id='putting_it_all_in_r'>Putting it all in R</h3>
+
+<p>The hard part is over. Here&#8217;s our graphic and how it&#8217;s implemented using our grammar of graphics and ggplot2. While it doesn&#8217;t look quite as good as Minard&#8217;s plot, we gain a lot of power by being able to create the graphic automatically as opposed to by hand &#8211; and it only took us a few minutes to create!</p>
+
+<p><img alt='minard' src='/images/minard.png' /></p>
+<div class='highlight'><pre><code class='r'><span class='lineno'> 1</span> library<span class='p'>(</span>ggplot2<span class='p'>)</span>
+<span class='lineno'> 2</span> library<span class='p'>(</span>maps<span class='p'>)</span>
+<span class='lineno'> 3</span>  
+<span class='lineno'> 4</span> troops <span class='o'>&lt;-</span> read.table<span class='p'>(</span><span class='s'>&quot;minard-troops.txt&quot;</span><span class='p'>,</span> header <span class='o'>=</span> <span class='k-Variable'>T</span><span class='p'>)</span>
+<span class='lineno'> 5</span> cities <span class='o'>&lt;-</span> read.table<span class='p'>(</span><span class='s'>&quot;minard-cities.txt&quot;</span><span class='p'>,</span> header <span class='o'>=</span> <span class='k-Variable'>T</span><span class='p'>)</span>
+<span class='lineno'> 6</span> russia <span class='o'>&lt;-</span> map_data<span class='p'>(</span><span class='s'>&quot;world&quot;</span><span class='p'>,</span> region <span class='o'>=</span> <span class='s'>&quot;USSR&quot;</span><span class='p'>)</span>
+<span class='lineno'> 7</span>  
+<span class='lineno'> 8</span> ggplot<span class='p'>(</span>troops<span class='p'>,</span> aes<span class='p'>(</span>x <span class='o'>=</span> long<span class='p'>,</span> y <span class='o'>=</span> lat<span class='p'>))</span> <span class='o'>+</span>
+<span class='lineno'> 9</span>   geom_polygon<span class='p'>(</span>aes<span class='p'>(</span>x <span class='o'>=</span> long<span class='p'>,</span> y <span class='o'>=</span> lat<span class='p'>,</span> group <span class='o'>=</span> group<span class='p'>),</span> data <span class='o'>=</span> russia<span class='p'>,</span> fill <span class='o'>=</span> <span class='s'>&quot;white&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+<span class='lineno'>10</span>   geom_path<span class='p'>(</span>aes<span class='p'>(</span>size <span class='o'>=</span> survivors<span class='p'>,</span> color <span class='o'>=</span> direction<span class='p'>,</span> group <span class='o'>=</span> group<span class='p'>),</span> lineend <span class='o'>=</span> <span class='s'>&quot;round&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+<span class='lineno'>11</span>   geom_text<span class='p'>(</span>aes<span class='p'>(</span>label <span class='o'>=</span> city<span class='p'>),</span> size <span class='o'>=</span> <span class='m'>3</span><span class='p'>,</span> data <span class='o'>=</span> cities<span class='p'>)</span> <span class='o'>+</span>
+<span class='lineno'>12</span>   xlab<span class='p'>(</span><span class='kc'>NULL</span><span class='p'>)</span> <span class='o'>+</span> ylab<span class='p'>(</span><span class='kc'>NULL</span><span class='p'>)</span> <span class='o'>+</span> coord_equal<span class='p'>(</span>xlim <span class='o'>=</span> c<span class='p'>(</span><span class='m'>23</span><span class='p'>,</span> <span class='m'>38</span><span class='p'>),</span> ylim <span class='o'>=</span> c<span class='p'>(</span><span class='m'>50</span><span class='p'>,</span> <span class='m'>60</span><span class='p'>))</span> <span class='o'>+</span>
+<span class='lineno'>13</span>   scale_colour_manual<span class='p'>(</span>values <span class='o'>=</span> c<span class='p'>(</span><span class='s'>&quot;bisque2&quot;</span><span class='p'>,</span><span class='s'>&quot;grey10&quot;</span><span class='p'>))</span>
+</code></pre></div>
