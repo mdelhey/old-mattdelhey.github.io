@@ -1,4 +1,65 @@
-<p><img alt='original_minard' src='/images/original_minard.jpg' /></p>
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <title>Reconstructing Napoleon's Failed March to Russia</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="/assets/css/style.css" rel="stylesheet" />
+  <link href="/assets/css/colors-dark.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+
+  <header id="header">
+    <h1><a href="/">matt delhey</a></h1>
+    <p>man is spirit. but what is spirit?</p>
+  </header>
+
+
+
+  <div id="page">
+
+
+
+    <div id="sidebar">
+      <nav>
+        <ul>
+          <li><a href="/">home</a></li>
+	        <li><a href="/about">about</a></li>
+          <li><a href="/projects">projects</a></li>
+          <li><a href="/archives">archive</a></li>
+    <hr />
+          <li><a href="/music">music</a></li>
+          <li><a href="/essays">essays</a></li>
+          <li><a href="/notes">notes</a><li>
+	  <hr />
+	  <li><a href="http://github.com/mattdelhey">github</a></li>
+	  <li><a href="http://facebook.com/mattdelhey">facebook</a></li>
+          <li><a href="http://twitter.com/mattdelhey">twitter</a></li>
+	  <li><a href="http://linkedin.com/mattdelhey">linkedin</a></li>
+        </ul>
+      </nav>
+    </div>
+
+
+
+    <div id="content">
+      <article class="post">
+
+	
+		<h1><a href="/2013/02/01/reconstructing-minards-march/">Reconstructing Napoleon's Failed March to Russia</a></h1>
+	
+
+	<div class="post-content"><p><img alt='original_minard' src='/images/original_minard.jpg' /></p>
 
 <p>Above is perhaps one the most famous statistical graphics ever created, found in nearly every history text-book (at least the ones I read&#8230;) that discusses Napoleon&#8217;s failed invasions of Russia in 1812. The graphic was originally created by <a href='http://en.wikipedia.org/wiki/Charles_Joseph_Minard'>Charles Joseph Minard</a>, a statistician ahead of his time.</p>
 
@@ -40,4 +101,35 @@ ggplot<span class='p'>(</span>troops<span class='p'>,</span> aes<span class='p'>
   geom_text<span class='p'>(</span>aes<span class='p'>(</span>label <span class='o'>=</span> city<span class='p'>),</span> size <span class='o'>=</span> <span class='m'>3</span><span class='p'>,</span> data <span class='o'>=</span> cities<span class='p'>)</span> <span class='o'>+</span>
   xlab<span class='p'>(</span><span class='kc'>NULL</span><span class='p'>)</span> <span class='o'>+</span> ylab<span class='p'>(</span><span class='kc'>NULL</span><span class='p'>)</span> <span class='o'>+</span> coord_equal<span class='p'>(</span>xlim <span class='o'>=</span> c<span class='p'>(</span><span class='m'>23</span><span class='p'>,</span> <span class='m'>38</span><span class='p'>),</span> ylim <span class='o'>=</span> c<span class='p'>(</span><span class='m'>50</span><span class='p'>,</span> <span class='m'>60</span><span class='p'>))</span> <span class='o'>+</span>
   scale_colour_manual<span class='p'>(</span>values <span class='o'>=</span> c<span class='p'>(</span><span class='s'>&quot;bisque2&quot;</span><span class='p'>,</span><span class='s'>&quot;grey10&quot;</span><span class='p'>))</span>
-</code></pre></div>
+</code></pre></div></div>
+
+	<p class="meta">Posted on <span class="postdate">Feb 01, 2013</span></p>
+
+</article>
+    </div>
+
+
+
+  </div>
+
+
+
+  <footer id="footer">
+    <p class="copyright">Copyright &copy; 2013 <a href="mailto:matt.delhey@rice.edu">matt.delhey@rice.edu</a>. Powered by <a href="http://jekyllrb.com">Jekyll</a>.</p>
+  </footer>
+
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="/assets/js/jquery.mobilemenu.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('#sidebar nav ul').mobileMenu({'topOptionText': 'Menu', 'prependTo': '#sidebar nav'});
+    });
+  </script>
+
+
+
+</body>
+</html>

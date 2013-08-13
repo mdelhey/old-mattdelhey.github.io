@@ -2,6 +2,7 @@
 layout: post
 title: 'Basic Python: Creating a Fern'
 date:   2013-01-01
+excerpt: In this short post I'm going to demonstrate how to use __Scipy__ and __matplotlib__ to make a basic graph of a fern. This is inspired from an introductory computational mathematics course that I'm currently taking in which we did the same task using __MATLAB__. Personally, I find __MATLAB__ to be less satisfying than __Python__, so I thought it pleasant to make a quick translation. 
 
 ---
 

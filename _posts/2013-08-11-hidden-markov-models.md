@@ -1,9 +1,12 @@
 ---
-title: 'Simulating Hidden Markov Chains using R'
+layout: post
+title: 'Simulating Hidden Markov Models using R'
 date:  2013-08-11
+excerpt: Ever wanted to explore Hidden Markov Models? It's extraordinarily easy using some of R's packages. Here I'm going to run through a quick example of modeling HMM's with the Viterbi algorithm and Posterior probabilities on a simulation using the __HMM__ package, with a focus on computation and visualization rather than mathematics (that's all on [Wikipedia](http://en.wikipedia.org/wiki/Hidden_Markov_model) anyways!)
 
 ---
 Ever wanted to explore Hidden Markov Chains? It's extraordinarily easy using some of R's packages. Here I'm going to run through a quick example of modeling HMM's with the Viterbi algorithm and Posterior probabilities on a simulation using the __HMM__ package, with a focus on computation and visualization rather than mathematics (that's all on [Wikipedia](http://en.wikipedia.org/wiki/Hidden_Markov_model) anyways!)
+
 
 ### Scenario ###
 Consider a casino which uses a fair die most of the time, but occasionally they switch to a loaded die. The loaded die has probability 0.5 of a six and probability 0.1 for the numbers one to five. Assume that the casino switches from a fair die to a loaded die with probability 0.05 before each roll, and the probability of switching back is 0.1.
