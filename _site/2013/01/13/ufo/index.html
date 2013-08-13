@@ -66,100 +66,100 @@
 <p>One thing that needs to be explained is the non-descriptive legend. This number was calculated by dividing the total number of UFO reports in each state over the entire decade divided by the state&#8217;s population. Therefore we can interpret the number as saying the average number of UFO reports over the decade submitted per person in that state. For example, Washington has the highest distribution of UFO reports at 4e^(-4), which is about 0.0732626 for those of you keeping track at home. This means that, on average, about 7 out of every 100 Washington residents has reported a UFO sighting! Of course, this assumes a uniform distribution of UFO reports across state residents, which is clearly not the case. But this at least gives a better feel for what the legend in this graphic is communicating.</p>
 
 <p>Finally, I have included the full R code used to load, clean, and visualize this data. Three data sets are used: the first (ufo_awesome.tsv) coming from the links above, and <a href='/assets/census.csv&quot;'>census.csv</a> plus <a href='/assets/states.csv'>states.csv</a> which are very small and thus available on this very site. This is a rather simple example that may be of use to someone just starting out with R so you shouldn&#8217;t have any difficulties running the code.</p>
-<div class='highlight'><pre><code class='r'><span class='lineno'> 1</span> <span class='c1'># Goal: Create a heatmap of UFO reports across the USA from 2000 to 2010</span>
-<span class='lineno'> 2</span> library<span class='p'>(</span>ggplot2<span class='p'>)</span>
-<span class='lineno'> 3</span> library<span class='p'>(</span>lubridate<span class='p'>)</span>
-<span class='lineno'> 4</span> library<span class='p'>(</span>stringr<span class='p'>)</span>
-<span class='lineno'> 5</span> library<span class='p'>(</span>plyr<span class='p'>)</span>
-<span class='lineno'> 6</span> library<span class='p'>(</span>maps<span class='p'>)</span>
-<span class='lineno'> 7</span> library<span class='p'>(</span>mapproj<span class='p'>)</span>
-<span class='lineno'> 8</span>  
-<span class='lineno'> 9</span> <span class='c1'># Load the data set (source: infochimps). Tab-delim, no header</span>
-<span class='lineno'>10</span> ufo <span class='o'>&lt;-</span> read.delim<span class='p'>(</span><span class='s'>&quot;ufo_awesome.tsv&quot;</span><span class='p'>,</span> sep <span class='o'>=</span> <span class='s'>&quot;\t&quot;</span><span class='p'>,</span> 
-<span class='lineno'>11</span>          stringsAsFactors <span class='o'>=</span> <span class='kc'>FALSE</span><span class='p'>,</span> header <span class='o'>=</span> <span class='kc'>FALSE</span><span class='p'>)</span>
-<span class='lineno'>12</span>  
-<span class='lineno'>13</span> <span class='c1'># Give names to each column in the data set</span>
-<span class='lineno'>14</span> names<span class='p'>(</span>ufo<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;date_occurred&quot;</span><span class='p'>,</span> <span class='s'>&quot;date_reported&quot;</span><span class='p'>,</span> 
-<span class='lineno'>15</span>                 <span class='s'>&quot;location&quot;</span><span class='p'>,</span> <span class='s'>&quot;short_description&quot;</span><span class='p'>,</span>
-<span class='lineno'>16</span>                 <span class='s'>&quot;duration&quot;</span><span class='p'>,</span> <span class='s'>&quot;long_description&quot;</span><span class='p'>)</span>
-<span class='lineno'>17</span>  
-<span class='lineno'>18</span> <span class='c1'># Some issues with our dates. Let&#39;s just take only the rows with good dates.</span>
-<span class='lineno'>19</span> ufo <span class='o'>&lt;-</span> ufo<span class='p'>[</span>nchar<span class='p'>(</span>ufo<span class='o'>$</span>date_occurred<span class='p'>)</span> <span class='o'>==</span> <span class='m'>8</span> <span class='o'>&amp;</span> nchar<span class='p'>(</span>ufo<span class='o'>$</span>date_reported<span class='p'>)</span> <span class='o'>==</span> <span class='m'>8</span><span class='p'>,</span> <span class='p'>]</span>
-<span class='lineno'>20</span>  
-<span class='lineno'>21</span> <span class='c1'># Turn date chracters into actual dates</span>
-<span class='lineno'>22</span> ufo<span class='o'>$</span>date_occurred <span class='o'>&lt;-</span> ymd<span class='p'>(</span>ufo<span class='o'>$</span>date_occurred<span class='p'>)</span>
-<span class='lineno'>23</span> ufo<span class='o'>$</span>date_reported <span class='o'>&lt;-</span> ymd<span class='p'>(</span>ufo<span class='o'>$</span>date_reported<span class='p'>)</span>
-<span class='lineno'>24</span>  
-<span class='lineno'>25</span> <span class='c1'># Only interested in reports from years 2000-2010</span>
-<span class='lineno'>26</span> ufo <span class='o'>&lt;-</span> subset<span class='p'>(</span>ufo<span class='p'>,</span> year<span class='p'>(</span>date_reported<span class='p'>)</span> <span class='o'>&gt;=</span> <span class='m'>2000</span><span class='p'>)</span>
-<span class='lineno'>27</span> qplot<span class='p'>(</span>ufo<span class='o'>$</span>date_reported<span class='p'>,</span> data <span class='o'>=</span> ufo<span class='p'>)</span>
-<span class='lineno'>28</span> <span class='c1'># Sizeable number of reports across all years</span>
-<span class='lineno'>29</span>  
-<span class='lineno'>30</span> <span class='c1'># Extract states of UFO reports into a new variable</span>
-<span class='lineno'>31</span> ufo<span class='o'>$</span>state <span class='o'>&lt;-</span> str_extract<span class='p'>(</span>ufo<span class='o'>$</span>location<span class='p'>,</span> <span class='s'>&quot;[,A-Z]{2}&quot;</span><span class='p'>)</span>
-<span class='lineno'>32</span> <span class='c1'># Let&#39;s check to see the number of NA vlues from our extraction</span>
-<span class='lineno'>33</span> length<span class='p'>(</span>which<span class='p'>(</span>is.na<span class='p'>(</span>str_extract<span class='p'>(</span>ufo<span class='o'>$</span>location<span class='p'>,</span> <span class='s'>&quot;[,A-Z]{2}&quot;</span><span class='p'>))))</span>
-<span class='lineno'>34</span> <span class='c1'># Most of these NA&#39;s are caused by international reports</span>
-<span class='lineno'>35</span>  
-<span class='lineno'>36</span> <span class='c1'># Remove the reports with NA&#39;s </span>
-<span class='lineno'>37</span> ufo <span class='o'>&lt;-</span> subset<span class='p'>(</span>ufo<span class='p'>,</span> <span class='o'>!</span>is.na<span class='p'>(</span>state<span class='p'>))</span>
-<span class='lineno'>38</span> <span class='c1'># We need to clean up some of the states!</span>
-<span class='lineno'>39</span> <span class='c1'># Only take real state abbrevations</span>
-<span class='lineno'>40</span> ufo_state <span class='o'>&lt;-</span> ufo<span class='p'>[</span>ufo<span class='o'>$</span>state <span class='o'>%in%</span> c<span class='p'>(</span><span class='s'>&quot;AL&quot;</span><span class='p'>,</span> <span class='s'>&quot;AK&quot;</span><span class='p'>,</span> <span class='s'>&quot;AZ&quot;</span><span class='p'>,</span> <span class='s'>&quot;AR&quot;</span><span class='p'>,</span> <span class='s'>&quot;CA&quot;</span><span class='p'>,</span> <span class='s'>&quot;CO&quot;</span><span class='p'>,</span> <span class='s'>&quot;CT&quot;</span><span class='p'>,</span>
-<span class='lineno'>41</span>                                   <span class='s'>&quot;DE&quot;</span><span class='p'>,</span> <span class='s'>&quot;DC&quot;</span><span class='p'>,</span> <span class='s'>&quot;FL&quot;</span><span class='p'>,</span> <span class='s'>&quot;GA&quot;</span><span class='p'>,</span> <span class='s'>&quot;HI&quot;</span><span class='p'>,</span> <span class='s'>&quot;ID&quot;</span><span class='p'>,</span> <span class='s'>&quot;IL&quot;</span><span class='p'>,</span>
-<span class='lineno'>42</span>                                   <span class='s'>&quot;IN&quot;</span><span class='p'>,</span> <span class='s'>&quot;IA&quot;</span><span class='p'>,</span> <span class='s'>&quot;KS&quot;</span><span class='p'>,</span> <span class='s'>&quot;KY&quot;</span><span class='p'>,</span> <span class='s'>&quot;LA&quot;</span><span class='p'>,</span> <span class='s'>&quot;ME&quot;</span><span class='p'>,</span> <span class='s'>&quot;MD&quot;</span><span class='p'>,</span>
-<span class='lineno'>43</span>                                   <span class='s'>&quot;MA&quot;</span><span class='p'>,</span> <span class='s'>&quot;MI&quot;</span><span class='p'>,</span> <span class='s'>&quot;MN&quot;</span><span class='p'>,</span> <span class='s'>&quot;MS&quot;</span><span class='p'>,</span> <span class='s'>&quot;MO&quot;</span><span class='p'>,</span> <span class='s'>&quot;MT&quot;</span><span class='p'>,</span> <span class='s'>&quot;NE&quot;</span><span class='p'>,</span>
-<span class='lineno'>44</span>                                   <span class='s'>&quot;NV&quot;</span><span class='p'>,</span> <span class='s'>&quot;NH&quot;</span><span class='p'>,</span> <span class='s'>&quot;NJ&quot;</span><span class='p'>,</span> <span class='s'>&quot;NM&quot;</span><span class='p'>,</span> <span class='s'>&quot;NY&quot;</span><span class='p'>,</span> <span class='s'>&quot;NC&quot;</span><span class='p'>,</span> <span class='s'>&quot;ND&quot;</span><span class='p'>,</span>
-<span class='lineno'>45</span>                                   <span class='s'>&quot;OH&quot;</span><span class='p'>,</span> <span class='s'>&quot;OK&quot;</span><span class='p'>,</span> <span class='s'>&quot;OR&quot;</span><span class='p'>,</span> <span class='s'>&quot;PA&quot;</span><span class='p'>,</span> <span class='s'>&quot;RI&quot;</span><span class='p'>,</span> <span class='s'>&quot;SC&quot;</span><span class='p'>,</span> <span class='s'>&quot;SD&quot;</span><span class='p'>,</span>
-<span class='lineno'>46</span>                                   <span class='s'>&quot;TN&quot;</span><span class='p'>,</span> <span class='s'>&quot;TX&quot;</span><span class='p'>,</span> <span class='s'>&quot;UT&quot;</span><span class='p'>,</span> <span class='s'>&quot;VT&quot;</span><span class='p'>,</span> <span class='s'>&quot;VA&quot;</span><span class='p'>,</span> <span class='s'>&quot;WA&quot;</span><span class='p'>,</span> <span class='s'>&quot;WV&quot;</span><span class='p'>,</span>
-<span class='lineno'>47</span>                                   <span class='s'>&quot;WI&quot;</span><span class='p'>,</span> <span class='s'>&quot;WY&quot;</span><span class='p'>),</span> <span class='p'>]</span><span class='o'>$</span>state
-<span class='lineno'>48</span> <span class='c1'># Get the frequency of reports in each state and save as a new data frame</span>
-<span class='lineno'>49</span> ufo_state <span class='o'>&lt;-</span> as.data.frame<span class='p'>(</span>table<span class='p'>(</span>ufo_state<span class='p'>))</span>
-<span class='lineno'>50</span> <span class='c1'># Change the name of the first variable to Abbreviation</span>
-<span class='lineno'>51</span> names<span class='p'>(</span>ufo_state<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;Abbreviation&quot;</span><span class='p'>,</span> <span class='s'>&quot;freq&quot;</span><span class='p'>)</span>
-<span class='lineno'>52</span> <span class='c1'># Expand the state abbrevations to full names using a new data set</span>
-<span class='lineno'>53</span> names <span class='o'>&lt;-</span> read.csv<span class='p'>(</span><span class='s'>&quot;states.csv&quot;</span><span class='p'>)</span>
-<span class='lineno'>54</span> ufo_state <span class='o'>&lt;-</span> join<span class='p'>(</span>ufo_state<span class='p'>,</span> names<span class='p'>,</span> type <span class='o'>=</span> <span class='s'>&quot;left&quot;</span><span class='p'>)</span>
-<span class='lineno'>55</span> <span class='c1'># Remove Abbreviation</span>
-<span class='lineno'>56</span> ufo_state <span class='o'>&lt;-</span> ufo_state<span class='p'>[</span> <span class='p'>,</span> <span class='m'>-1</span><span class='p'>]</span>
-<span class='lineno'>57</span>  
-<span class='lineno'>58</span> <span class='c1'># Normalize number of reports in each state by population</span>
-<span class='lineno'>59</span> <span class='c1'># 1. Load in census data </span>
-<span class='lineno'>60</span> <span class='c1'># We have info for 2011, 2012, and 2000</span>
-<span class='lineno'>61</span> census <span class='o'>&lt;-</span> read.csv<span class='p'>(</span><span class='s'>&quot;census.csv&quot;</span><span class='p'>,</span> header <span class='o'>=</span> <span class='kc'>TRUE</span><span class='p'>,</span> stringsAsFactors <span class='o'>=</span> <span class='kc'>FALSE</span><span class='p'>)</span>
-<span class='lineno'>62</span> <span class='c1'># Fix names of census data for our variables</span>
-<span class='lineno'>63</span> names<span class='p'>(</span>census<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;state&quot;</span><span class='p'>,</span> <span class='s'>&quot;x2011&quot;</span><span class='p'>,</span> <span class='s'>&quot;x2012&quot;</span><span class='p'>,</span> <span class='s'>&quot;x2000&quot;</span><span class='p'>)</span>
-<span class='lineno'>64</span> <span class='c1'># 2. Create population dataframe by averaging 2011 and 2000 pop. This is OKay</span>
-<span class='lineno'>65</span> <span class='c1'>#    because we are trying to approximate pop between 2000-2010</span>
-<span class='lineno'>66</span> pop <span class='o'>&lt;-</span> data.frame<span class='p'>(</span>cbind<span class='p'>(</span>census<span class='p'>[,</span> <span class='m'>1</span><span class='p'>],</span> <span class='kc'>NA</span><span class='p'>))</span>
-<span class='lineno'>67</span> pop<span class='p'>[</span> <span class='p'>,</span> <span class='m'>2</span><span class='p'>]</span> <span class='o'>&lt;-</span> summarise<span class='p'>(</span>census<span class='p'>,</span> pop <span class='o'>=</span> <span class='p'>(</span>x2011 <span class='o'>+</span> x2000<span class='p'>)</span> <span class='o'>/</span> <span class='m'>2</span><span class='p'>)</span>
-<span class='lineno'>68</span> <span class='c1'># Change the names of the varaibles of our new df</span>
-<span class='lineno'>69</span> names<span class='p'>(</span>pop<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;State&quot;</span><span class='p'>,</span> <span class='s'>&quot;population&quot;</span><span class='p'>)</span>
-<span class='lineno'>70</span>  
-<span class='lineno'>71</span> <span class='c1'># Join our ufo_state and and pop data sets</span>
-<span class='lineno'>72</span> ufo <span class='o'>&lt;-</span> join<span class='p'>(</span>ufo_state<span class='p'>,</span> pop<span class='p'>,</span> type <span class='o'>=</span> <span class='s'>&quot;left&quot;</span><span class='p'>)</span>
-<span class='lineno'>73</span> <span class='c1'># Manually add in DC census data </span>
-<span class='lineno'>74</span> ufo<span class='p'>[</span>ufo<span class='o'>$</span>State <span class='o'>==</span> <span class='s'>&quot;District of Columbia&quot;</span><span class='p'>,</span> <span class='m'>3</span><span class='p'>]</span> <span class='o'>&lt;-</span> <span class='m'>617996</span>
-<span class='lineno'>75</span> <span class='c1'># Divide freq by population for nomilzation</span>
-<span class='lineno'>76</span> ufo <span class='o'>&lt;-</span> mutate<span class='p'>(</span>ufo<span class='p'>,</span> norm.freq <span class='o'>=</span> freq <span class='o'>/</span> population<span class='p'>)</span>
-<span class='lineno'>77</span> <span class='c1'># Convert state names to lower-case for joining later</span>
-<span class='lineno'>78</span> ufo<span class='o'>$</span>State <span class='o'>&lt;-</span> tolower<span class='p'>(</span>ufo<span class='o'>$</span>State<span class='p'>)</span>
-<span class='lineno'>79</span> ufo<span class='o'>$</span>region <span class='o'>&lt;-</span> ufo<span class='o'>$</span>State
-<span class='lineno'>80</span>  
-<span class='lineno'>81</span> <span class='c1'># Get our map data of the continental usa</span>
-<span class='lineno'>82</span> usa <span class='o'>&lt;-</span> map_data<span class='p'>(</span><span class='s'>&quot;state&quot;</span><span class='p'>)</span>
-<span class='lineno'>83</span> <span class='c1'># Combine our ufo data with our map data</span>
-<span class='lineno'>84</span> usa.ufo <span class='o'>&lt;-</span> join<span class='p'>(</span>ufo<span class='p'>,</span> usa<span class='p'>,</span> type <span class='o'>=</span> <span class='s'>&quot;right&quot;</span><span class='p'>)</span>
-<span class='lineno'>85</span>  
-<span class='lineno'>86</span> <span class='c1'># Create our plot!</span>
-<span class='lineno'>87</span> ggplot<span class='p'>(</span>aes<span class='p'>(</span>x <span class='o'>=</span> long<span class='p'>,</span> y <span class='o'>=</span> lat<span class='p'>,</span> group <span class='o'>=</span> group<span class='p'>),</span> data <span class='o'>=</span> usa.ufo<span class='p'>)</span> <span class='o'>+</span>
-<span class='lineno'>88</span>   geom_polygon<span class='p'>(</span>aes<span class='p'>(</span>fill <span class='o'>=</span> norm.freq<span class='p'>))</span> <span class='o'>+</span> geom_path<span class='p'>()</span> <span class='o'>+</span>
-<span class='lineno'>89</span>   theme_bw<span class='p'>()</span> <span class='o'>+</span> scale_x_continuous<span class='p'>(</span><span class='s'>&quot;&quot;</span><span class='p'>)</span> <span class='o'>+</span> scale_y_continuous<span class='p'>(</span><span class='s'>&quot;&quot;</span><span class='p'>)</span> <span class='o'>+</span>
-<span class='lineno'>90</span>   ggtitle<span class='p'>(</span><span class='s'>&quot;Normalized Distribution of UFO Reports Across Continental U.S.</span>
-<span class='lineno'>91</span> <span class='s'>  Between 2000 to 2010&quot;</span><span class='p'>)</span> <span class='o'>+</span> theme<span class='p'>(</span>plot.title <span class='o'>=</span> element_text<span class='p'>(</span>lineheight <span class='o'>=</span> <span class='m'>0.8</span><span class='p'>,</span>
-<span class='lineno'>92</span>   face <span class='o'>=</span> <span class='s'>&quot;bold&quot;</span><span class='p'>))</span> <span class='o'>+</span> labs<span class='p'>(</span>fill <span class='o'>=</span> <span class='s'>&quot;Normalized Frequency of UFO Reports&quot;</span><span class='p'>)</span> <span class='o'>+</span>
-<span class='lineno'>93</span>   opts<span class='p'>(</span>legend.position <span class='o'>=</span> <span class='s'>&quot;bottom&quot;</span><span class='p'>)</span> <span class='o'>+</span> 
-<span class='lineno'>94</span>   scale_fill_gradient<span class='p'>(</span>low <span class='o'>=</span> <span class='s'>&quot;#EEEEEE&quot;</span><span class='p'>,</span> high <span class='o'>=</span> <span class='s'>&quot;#31A354&quot;</span><span class='p'>)</span>
+<div class='highlight'><pre><code class='r'><span class='c1'># Goal: Create a heatmap of UFO reports across the USA from 2000 to 2010</span>
+library<span class='p'>(</span>ggplot2<span class='p'>)</span>
+library<span class='p'>(</span>lubridate<span class='p'>)</span>
+library<span class='p'>(</span>stringr<span class='p'>)</span>
+library<span class='p'>(</span>plyr<span class='p'>)</span>
+library<span class='p'>(</span>maps<span class='p'>)</span>
+library<span class='p'>(</span>mapproj<span class='p'>)</span>
+ 
+<span class='c1'># Load the data set (source: infochimps). Tab-delim, no header</span>
+ufo <span class='o'>&lt;-</span> read.delim<span class='p'>(</span><span class='s'>&quot;ufo_awesome.tsv&quot;</span><span class='p'>,</span> sep <span class='o'>=</span> <span class='s'>&quot;\t&quot;</span><span class='p'>,</span> 
+         stringsAsFactors <span class='o'>=</span> <span class='kc'>FALSE</span><span class='p'>,</span> header <span class='o'>=</span> <span class='kc'>FALSE</span><span class='p'>)</span>
+ 
+<span class='c1'># Give names to each column in the data set</span>
+names<span class='p'>(</span>ufo<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;date_occurred&quot;</span><span class='p'>,</span> <span class='s'>&quot;date_reported&quot;</span><span class='p'>,</span> 
+                <span class='s'>&quot;location&quot;</span><span class='p'>,</span> <span class='s'>&quot;short_description&quot;</span><span class='p'>,</span>
+                <span class='s'>&quot;duration&quot;</span><span class='p'>,</span> <span class='s'>&quot;long_description&quot;</span><span class='p'>)</span>
+ 
+<span class='c1'># Some issues with our dates. Let&#39;s just take only the rows with good dates.</span>
+ufo <span class='o'>&lt;-</span> ufo<span class='p'>[</span>nchar<span class='p'>(</span>ufo<span class='o'>$</span>date_occurred<span class='p'>)</span> <span class='o'>==</span> <span class='m'>8</span> <span class='o'>&amp;</span> nchar<span class='p'>(</span>ufo<span class='o'>$</span>date_reported<span class='p'>)</span> <span class='o'>==</span> <span class='m'>8</span><span class='p'>,</span> <span class='p'>]</span>
+ 
+<span class='c1'># Turn date chracters into actual dates</span>
+ufo<span class='o'>$</span>date_occurred <span class='o'>&lt;-</span> ymd<span class='p'>(</span>ufo<span class='o'>$</span>date_occurred<span class='p'>)</span>
+ufo<span class='o'>$</span>date_reported <span class='o'>&lt;-</span> ymd<span class='p'>(</span>ufo<span class='o'>$</span>date_reported<span class='p'>)</span>
+ 
+<span class='c1'># Only interested in reports from years 2000-2010</span>
+ufo <span class='o'>&lt;-</span> subset<span class='p'>(</span>ufo<span class='p'>,</span> year<span class='p'>(</span>date_reported<span class='p'>)</span> <span class='o'>&gt;=</span> <span class='m'>2000</span><span class='p'>)</span>
+qplot<span class='p'>(</span>ufo<span class='o'>$</span>date_reported<span class='p'>,</span> data <span class='o'>=</span> ufo<span class='p'>)</span>
+<span class='c1'># Sizeable number of reports across all years</span>
+ 
+<span class='c1'># Extract states of UFO reports into a new variable</span>
+ufo<span class='o'>$</span>state <span class='o'>&lt;-</span> str_extract<span class='p'>(</span>ufo<span class='o'>$</span>location<span class='p'>,</span> <span class='s'>&quot;[,A-Z]{2}&quot;</span><span class='p'>)</span>
+<span class='c1'># Let&#39;s check to see the number of NA vlues from our extraction</span>
+length<span class='p'>(</span>which<span class='p'>(</span>is.na<span class='p'>(</span>str_extract<span class='p'>(</span>ufo<span class='o'>$</span>location<span class='p'>,</span> <span class='s'>&quot;[,A-Z]{2}&quot;</span><span class='p'>))))</span>
+<span class='c1'># Most of these NA&#39;s are caused by international reports</span>
+ 
+<span class='c1'># Remove the reports with NA&#39;s </span>
+ufo <span class='o'>&lt;-</span> subset<span class='p'>(</span>ufo<span class='p'>,</span> <span class='o'>!</span>is.na<span class='p'>(</span>state<span class='p'>))</span>
+<span class='c1'># We need to clean up some of the states!</span>
+<span class='c1'># Only take real state abbrevations</span>
+ufo_state <span class='o'>&lt;-</span> ufo<span class='p'>[</span>ufo<span class='o'>$</span>state <span class='o'>%in%</span> c<span class='p'>(</span><span class='s'>&quot;AL&quot;</span><span class='p'>,</span> <span class='s'>&quot;AK&quot;</span><span class='p'>,</span> <span class='s'>&quot;AZ&quot;</span><span class='p'>,</span> <span class='s'>&quot;AR&quot;</span><span class='p'>,</span> <span class='s'>&quot;CA&quot;</span><span class='p'>,</span> <span class='s'>&quot;CO&quot;</span><span class='p'>,</span> <span class='s'>&quot;CT&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;DE&quot;</span><span class='p'>,</span> <span class='s'>&quot;DC&quot;</span><span class='p'>,</span> <span class='s'>&quot;FL&quot;</span><span class='p'>,</span> <span class='s'>&quot;GA&quot;</span><span class='p'>,</span> <span class='s'>&quot;HI&quot;</span><span class='p'>,</span> <span class='s'>&quot;ID&quot;</span><span class='p'>,</span> <span class='s'>&quot;IL&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;IN&quot;</span><span class='p'>,</span> <span class='s'>&quot;IA&quot;</span><span class='p'>,</span> <span class='s'>&quot;KS&quot;</span><span class='p'>,</span> <span class='s'>&quot;KY&quot;</span><span class='p'>,</span> <span class='s'>&quot;LA&quot;</span><span class='p'>,</span> <span class='s'>&quot;ME&quot;</span><span class='p'>,</span> <span class='s'>&quot;MD&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;MA&quot;</span><span class='p'>,</span> <span class='s'>&quot;MI&quot;</span><span class='p'>,</span> <span class='s'>&quot;MN&quot;</span><span class='p'>,</span> <span class='s'>&quot;MS&quot;</span><span class='p'>,</span> <span class='s'>&quot;MO&quot;</span><span class='p'>,</span> <span class='s'>&quot;MT&quot;</span><span class='p'>,</span> <span class='s'>&quot;NE&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;NV&quot;</span><span class='p'>,</span> <span class='s'>&quot;NH&quot;</span><span class='p'>,</span> <span class='s'>&quot;NJ&quot;</span><span class='p'>,</span> <span class='s'>&quot;NM&quot;</span><span class='p'>,</span> <span class='s'>&quot;NY&quot;</span><span class='p'>,</span> <span class='s'>&quot;NC&quot;</span><span class='p'>,</span> <span class='s'>&quot;ND&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;OH&quot;</span><span class='p'>,</span> <span class='s'>&quot;OK&quot;</span><span class='p'>,</span> <span class='s'>&quot;OR&quot;</span><span class='p'>,</span> <span class='s'>&quot;PA&quot;</span><span class='p'>,</span> <span class='s'>&quot;RI&quot;</span><span class='p'>,</span> <span class='s'>&quot;SC&quot;</span><span class='p'>,</span> <span class='s'>&quot;SD&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;TN&quot;</span><span class='p'>,</span> <span class='s'>&quot;TX&quot;</span><span class='p'>,</span> <span class='s'>&quot;UT&quot;</span><span class='p'>,</span> <span class='s'>&quot;VT&quot;</span><span class='p'>,</span> <span class='s'>&quot;VA&quot;</span><span class='p'>,</span> <span class='s'>&quot;WA&quot;</span><span class='p'>,</span> <span class='s'>&quot;WV&quot;</span><span class='p'>,</span>
+                                  <span class='s'>&quot;WI&quot;</span><span class='p'>,</span> <span class='s'>&quot;WY&quot;</span><span class='p'>),</span> <span class='p'>]</span><span class='o'>$</span>state
+<span class='c1'># Get the frequency of reports in each state and save as a new data frame</span>
+ufo_state <span class='o'>&lt;-</span> as.data.frame<span class='p'>(</span>table<span class='p'>(</span>ufo_state<span class='p'>))</span>
+<span class='c1'># Change the name of the first variable to Abbreviation</span>
+names<span class='p'>(</span>ufo_state<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;Abbreviation&quot;</span><span class='p'>,</span> <span class='s'>&quot;freq&quot;</span><span class='p'>)</span>
+<span class='c1'># Expand the state abbrevations to full names using a new data set</span>
+names <span class='o'>&lt;-</span> read.csv<span class='p'>(</span><span class='s'>&quot;states.csv&quot;</span><span class='p'>)</span>
+ufo_state <span class='o'>&lt;-</span> join<span class='p'>(</span>ufo_state<span class='p'>,</span> names<span class='p'>,</span> type <span class='o'>=</span> <span class='s'>&quot;left&quot;</span><span class='p'>)</span>
+<span class='c1'># Remove Abbreviation</span>
+ufo_state <span class='o'>&lt;-</span> ufo_state<span class='p'>[</span> <span class='p'>,</span> <span class='m'>-1</span><span class='p'>]</span>
+ 
+<span class='c1'># Normalize number of reports in each state by population</span>
+<span class='c1'># 1. Load in census data </span>
+<span class='c1'># We have info for 2011, 2012, and 2000</span>
+census <span class='o'>&lt;-</span> read.csv<span class='p'>(</span><span class='s'>&quot;census.csv&quot;</span><span class='p'>,</span> header <span class='o'>=</span> <span class='kc'>TRUE</span><span class='p'>,</span> stringsAsFactors <span class='o'>=</span> <span class='kc'>FALSE</span><span class='p'>)</span>
+<span class='c1'># Fix names of census data for our variables</span>
+names<span class='p'>(</span>census<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;state&quot;</span><span class='p'>,</span> <span class='s'>&quot;x2011&quot;</span><span class='p'>,</span> <span class='s'>&quot;x2012&quot;</span><span class='p'>,</span> <span class='s'>&quot;x2000&quot;</span><span class='p'>)</span>
+<span class='c1'># 2. Create population dataframe by averaging 2011 and 2000 pop. This is OKay</span>
+<span class='c1'>#    because we are trying to approximate pop between 2000-2010</span>
+pop <span class='o'>&lt;-</span> data.frame<span class='p'>(</span>cbind<span class='p'>(</span>census<span class='p'>[,</span> <span class='m'>1</span><span class='p'>],</span> <span class='kc'>NA</span><span class='p'>))</span>
+pop<span class='p'>[</span> <span class='p'>,</span> <span class='m'>2</span><span class='p'>]</span> <span class='o'>&lt;-</span> summarise<span class='p'>(</span>census<span class='p'>,</span> pop <span class='o'>=</span> <span class='p'>(</span>x2011 <span class='o'>+</span> x2000<span class='p'>)</span> <span class='o'>/</span> <span class='m'>2</span><span class='p'>)</span>
+<span class='c1'># Change the names of the varaibles of our new df</span>
+names<span class='p'>(</span>pop<span class='p'>)</span> <span class='o'>&lt;-</span> c<span class='p'>(</span><span class='s'>&quot;State&quot;</span><span class='p'>,</span> <span class='s'>&quot;population&quot;</span><span class='p'>)</span>
+ 
+<span class='c1'># Join our ufo_state and and pop data sets</span>
+ufo <span class='o'>&lt;-</span> join<span class='p'>(</span>ufo_state<span class='p'>,</span> pop<span class='p'>,</span> type <span class='o'>=</span> <span class='s'>&quot;left&quot;</span><span class='p'>)</span>
+<span class='c1'># Manually add in DC census data </span>
+ufo<span class='p'>[</span>ufo<span class='o'>$</span>State <span class='o'>==</span> <span class='s'>&quot;District of Columbia&quot;</span><span class='p'>,</span> <span class='m'>3</span><span class='p'>]</span> <span class='o'>&lt;-</span> <span class='m'>617996</span>
+<span class='c1'># Divide freq by population for nomilzation</span>
+ufo <span class='o'>&lt;-</span> mutate<span class='p'>(</span>ufo<span class='p'>,</span> norm.freq <span class='o'>=</span> freq <span class='o'>/</span> population<span class='p'>)</span>
+<span class='c1'># Convert state names to lower-case for joining later</span>
+ufo<span class='o'>$</span>State <span class='o'>&lt;-</span> tolower<span class='p'>(</span>ufo<span class='o'>$</span>State<span class='p'>)</span>
+ufo<span class='o'>$</span>region <span class='o'>&lt;-</span> ufo<span class='o'>$</span>State
+ 
+<span class='c1'># Get our map data of the continental usa</span>
+usa <span class='o'>&lt;-</span> map_data<span class='p'>(</span><span class='s'>&quot;state&quot;</span><span class='p'>)</span>
+<span class='c1'># Combine our ufo data with our map data</span>
+usa.ufo <span class='o'>&lt;-</span> join<span class='p'>(</span>ufo<span class='p'>,</span> usa<span class='p'>,</span> type <span class='o'>=</span> <span class='s'>&quot;right&quot;</span><span class='p'>)</span>
+ 
+<span class='c1'># Create our plot!</span>
+ggplot<span class='p'>(</span>aes<span class='p'>(</span>x <span class='o'>=</span> long<span class='p'>,</span> y <span class='o'>=</span> lat<span class='p'>,</span> group <span class='o'>=</span> group<span class='p'>),</span> data <span class='o'>=</span> usa.ufo<span class='p'>)</span> <span class='o'>+</span>
+  geom_polygon<span class='p'>(</span>aes<span class='p'>(</span>fill <span class='o'>=</span> norm.freq<span class='p'>))</span> <span class='o'>+</span> geom_path<span class='p'>()</span> <span class='o'>+</span>
+  theme_bw<span class='p'>()</span> <span class='o'>+</span> scale_x_continuous<span class='p'>(</span><span class='s'>&quot;&quot;</span><span class='p'>)</span> <span class='o'>+</span> scale_y_continuous<span class='p'>(</span><span class='s'>&quot;&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+  ggtitle<span class='p'>(</span><span class='s'>&quot;Normalized Distribution of UFO Reports Across Continental U.S.</span>
+<span class='s'>  Between 2000 to 2010&quot;</span><span class='p'>)</span> <span class='o'>+</span> theme<span class='p'>(</span>plot.title <span class='o'>=</span> element_text<span class='p'>(</span>lineheight <span class='o'>=</span> <span class='m'>0.8</span><span class='p'>,</span>
+  face <span class='o'>=</span> <span class='s'>&quot;bold&quot;</span><span class='p'>))</span> <span class='o'>+</span> labs<span class='p'>(</span>fill <span class='o'>=</span> <span class='s'>&quot;Normalized Frequency of UFO Reports&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+  opts<span class='p'>(</span>legend.position <span class='o'>=</span> <span class='s'>&quot;bottom&quot;</span><span class='p'>)</span> <span class='o'>+</span> 
+  scale_fill_gradient<span class='p'>(</span>low <span class='o'>=</span> <span class='s'>&quot;#EEEEEE&quot;</span><span class='p'>,</span> high <span class='o'>=</span> <span class='s'>&quot;#31A354&quot;</span><span class='p'>)</span>
 </code></pre></div></div>
 
 	<p class="meta">Posted on <span class="postdate">Jan 13, 2013</span></p>

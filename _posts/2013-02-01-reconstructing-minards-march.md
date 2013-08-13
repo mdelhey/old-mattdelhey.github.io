@@ -25,7 +25,7 @@ The hard part is over. Here's our graphic and how it's implemented using our gra
 
 ![minard]({{ site.url }}/images/minard.png)
 
-{% highlight r linenos %}
+{% highlight r %}
 library(ggplot2)
 library(maps)
  

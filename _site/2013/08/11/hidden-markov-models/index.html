@@ -1,0 +1,146 @@
+<p>Ever wanted to explore Hidden Markov Chains? It&#8217;s extraordinarily easy using some of R&#8217;s packages. Here I&#8217;m going to run through a quick example of modeling HMM&#8217;s with the Viterbi algorithm and Posterior probabilities on a simulation using the <strong>HMM</strong> package, with a focus on computation and visualization rather than mathematics (that&#8217;s all on <a href='http://en.wikipedia.org/wiki/Hidden_Markov_model'>Wikipedia</a> anyways!)</p>
+
+<h3 id='scenario'>Scenario</h3>
+
+<p>Consider a casino which uses a fair die most of the time, but occasionally they switch to a loaded die. The loaded die has probability 0.5 of a six and probability 0.1 for the numbers one to five. Assume that the casino switches from a fair die to a loaded die with probability 0.05 before each roll, and the probability of switching back is 0.1.</p>
+
+<p>Here we can see that we&#8217;re dealing with a simple, two-state HMM with the following transition probability and emission probability matrices:</p>
+
+<p>TPM = <span>.95 .05</span></p>
+
+<pre><code>     [.10  .90]
+        1     2    3     4     5     6</code></pre>
+
+<p>EPM = F <span>1/6 1/6 1/6 1/6 1/6 1/6</span></p>
+
+<pre><code>   L [1/10  1/10  1/10  1/10  1/10  1/2]</code></pre>
+
+<p>I also took the time to create the following &#8220;graphic&#8221; of the process:</p>
+
+<p><img alt='hidden-markov-model' src='/images/hmm.png' /></p>
+
+<p>Not pretty, but it gets the job done in terms of aiding our understanding of the process.</p>
+
+<h3 id='simulation'>Simulation</h3>
+
+<p>Let&#8217;s simulate 500 of such dice rolls. To make things easier, I used the <strong>dice</strong> function from the <strong>TeachingDemos</strong> package, which supports loaded dice tosses from our EPM matrix. Here&#8217;s how I ran my simulations:</p>
+<div class='highlight'><pre><code class='r'><span class='c1'>### Simulation &amp; Modeling of Hidden Markov Model (HMM)</span>
+library<span class='p'>(</span>TeachingDemos<span class='p'>)</span>
+library<span class='p'>(</span>HMM<span class='p'>)</span>
+library<span class='p'>(</span>ggplot2<span class='p'>)</span>
+set.seed<span class='p'>(</span><span class='m'>1</span><span class='p'>)</span>
+
+<span class='c1'>### Define our variables</span>
+TPM <span class='o'>&lt;-</span> matrix<span class='p'>(</span>c<span class='p'>(</span><span class='m'>.95</span><span class='p'>,</span> <span class='m'>.05</span><span class='p'>,</span> 
+                <span class='m'>.1</span><span class='p'>,</span> <span class='m'>.9</span><span class='p'>),</span> <span class='m'>2</span><span class='p'>,</span> byrow <span class='o'>=</span> <span class='kc'>TRUE</span><span class='p'>)</span>
+EPM <span class='o'>&lt;-</span> matrix<span class='p'>(</span>c<span class='p'>(</span><span class='m'>1</span><span class='o'>/</span><span class='m'>6</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>6</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>6</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>6</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>6</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>6</span><span class='p'>,</span>
+                <span class='m'>1</span><span class='o'>/</span><span class='m'>10</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>10</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>10</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>10</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>10</span><span class='p'>,</span> <span class='m'>1</span><span class='o'>/</span><span class='m'>2</span><span class='p'>),</span> <span class='m'>2</span><span class='p'>,</span> byrow <span class='o'>=</span> <span class='kc'>TRUE</span><span class='p'>)</span>
+simulations <span class='o'>&lt;-</span> <span class='m'>500</span>
+
+<span class='c1'>### Create a dataframe to hold our results</span>
+dice <span class='o'>&lt;-</span> rep<span class='p'>(</span><span class='kc'>NA</span><span class='p'>,</span> simulations<span class='p'>)</span>
+number <span class='o'>&lt;-</span> rep.int<span class='p'>(</span><span class='m'>0</span><span class='p'>,</span> simulations<span class='p'>)</span>
+results <span class='o'>&lt;-</span> data.frame<span class='p'>(</span>dice<span class='p'>,</span> number<span class='p'>)</span>
+
+<span class='c1'>### Simulate</span>
+<span class='c1'># Assume we start with a fair dice</span>
+state <span class='o'>&lt;-</span> <span class='s'>&quot;FAIR&quot;</span>
+<span class='kr'>for</span> <span class='p'>(</span>i <span class='kr'>in</span> <span class='m'>1</span><span class='o'>:</span>simulations<span class='p'>)</span> <span class='p'>{</span>
+  <span class='kr'>if</span> <span class='p'>(</span>state <span class='o'>==</span> <span class='s'>&quot;FAIR&quot;</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='c1'># Check to see if we&#39;re staying with a FAIR dice</span>
+    p <span class='o'>&lt;-</span> runif<span class='p'>(</span><span class='m'>1</span><span class='p'>)</span>
+    <span class='kr'>if</span> <span class='p'>(</span>p <span class='o'>&lt;=</span> TPM<span class='p'>[</span><span class='m'>1</span><span class='p'>,</span><span class='m'>2</span><span class='p'>])</span> <span class='p'>{</span>
+      <span class='c1'># If not, roll loaded dice</span>
+      roll <span class='o'>&lt;-</span> dice<span class='p'>(</span>rolls <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> ndice <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> sides <span class='o'>=</span> <span class='m'>6</span><span class='p'>,</span> load <span class='o'>=</span> EPM<span class='p'>[</span><span class='m'>2</span><span class='p'>,])[[</span><span class='m'>1</span><span class='p'>]]</span>
+      <span class='c1'># Remember new state</span>
+      state <span class='o'>&lt;-</span> <span class='s'>&quot;LOADED&quot;</span>
+    <span class='p'>}</span>
+    <span class='kr'>else</span> <span class='p'>{</span>
+      <span class='c1'># Roll fair dice</span>
+      roll <span class='o'>&lt;-</span> dice<span class='p'>(</span>rolls <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> ndice <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> sides <span class='o'>=</span> <span class='m'>6</span><span class='p'>,</span> load <span class='o'>=</span> EPM<span class='p'>[</span><span class='m'>1</span><span class='p'>,])[[</span><span class='m'>1</span><span class='p'>]]</span>
+      <span class='c1'># Remember old state</span>
+      state <span class='o'>&lt;-</span> <span class='s'>&quot;FAIR&quot;</span>
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+  <span class='kr'>if</span> <span class='p'>(</span>state <span class='o'>==</span> <span class='s'>&quot;LOADED&quot;</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='c1'># Check to see if we&#39;re staying with a LOADED dice</span>
+    p <span class='o'>&lt;-</span> runif<span class='p'>(</span><span class='m'>1</span><span class='p'>)</span>
+    <span class='kr'>if</span> <span class='p'>(</span>p <span class='o'>&lt;</span> TPM<span class='p'>[</span><span class='m'>2</span><span class='p'>,</span><span class='m'>1</span><span class='p'>])</span> <span class='p'>{</span>
+      <span class='c1'># If not, roll fair dice</span>
+      roll <span class='o'>&lt;-</span> dice<span class='p'>(</span>rolls <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> ndice <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> sides <span class='o'>=</span> <span class='m'>6</span><span class='p'>,</span> load <span class='o'>=</span> EPM<span class='p'>[</span><span class='m'>1</span><span class='p'>,])[[</span><span class='m'>1</span><span class='p'>]]</span>
+      <span class='c1'># Remember new state</span>
+      state <span class='o'>&lt;-</span> <span class='s'>&quot;FAIR&quot;</span>
+    <span class='p'>}</span>
+    <span class='kr'>else</span> <span class='p'>{</span>
+      <span class='c1'># Roll loaded dice</span>
+      roll <span class='o'>&lt;-</span> dice<span class='p'>(</span>rolls <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> ndice <span class='o'>=</span> <span class='m'>1</span><span class='p'>,</span> sides <span class='o'>=</span> <span class='m'>6</span><span class='p'>,</span> load <span class='o'>=</span> EPM<span class='p'>[</span><span class='m'>2</span><span class='p'>,])[[</span><span class='m'>1</span><span class='p'>]]</span>
+      <span class='c1'># Remember old state</span>
+      state <span class='o'>&lt;-</span> <span class='s'>&quot;LOADED&quot;</span>
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+  <span class='c1'># Save dice roll and state</span>
+  results<span class='p'>[</span>i<span class='p'>,</span> <span class='m'>1</span><span class='p'>]</span> <span class='o'>&lt;-</span> state
+  results<span class='p'>[</span>i<span class='p'>,</span> <span class='m'>2</span><span class='p'>]</span> <span class='o'>&lt;-</span> roll
+<span class='p'>}</span>
+</code></pre></div>
+<h3 id='modeling'>Modeling</h3>
+
+<p>Now that we have a sequence of dice rolls from known states, let&#8217;s see how well we can predict the states from the sequence. Here I&#8217;m going to focus on two basic and simple methodologies: (1) the Viterbi algorithm and (2) posterior probabilities. The mathematics for both of these methods can be easily found via Google if you&#8217;re at all curious. Luckily for the lazy, the <strong>HMM</strong> package contains functions for computing both of these predictions very easily. Here&#8217;s how I did it:</p>
+<div class='highlight'><pre><code class='r'><span class='c1'>### Modeling</span>
+<span class='c1'># Create hmm using our TPM/EPM</span>
+hmm <span class='o'>&lt;-</span> initHMM<span class='p'>(</span>c<span class='p'>(</span><span class='s'>&quot;FAIR&quot;</span><span class='p'>,</span> <span class='s'>&quot;LOADED&quot;</span><span class='p'>),</span> c<span class='p'>(</span><span class='m'>1</span><span class='p'>,</span> <span class='m'>2</span><span class='p'>,</span> <span class='m'>3</span><span class='p'>,</span> <span class='m'>4</span><span class='p'>,</span> <span class='m'>5</span><span class='p'>,</span> <span class='m'>6</span><span class='p'>),</span>
+               transProbs <span class='o'>=</span> TPM<span class='p'>,</span> emissionProbs <span class='o'>=</span> EPM<span class='p'>)</span>
+<span class='c1'># Pull in results from the simulation</span>
+obs <span class='o'>&lt;-</span> results<span class='p'>[,</span> <span class='m'>2</span><span class='p'>]</span>
+<span class='c1'># Save Viterbi/Posterior predictions as a new column</span>
+results<span class='o'>$</span>viterbi <span class='o'>&lt;-</span> viterbi<span class='p'>(</span>hmm<span class='p'>,</span> obs<span class='p'>)</span>
+results<span class='o'>$</span>posterior <span class='o'>&lt;-</span> posterior<span class='p'>(</span>hmm<span class='p'>,</span> obs<span class='p'>)[</span><span class='m'>1</span><span class='p'>,</span> <span class='p'>]</span>
+results<span class='o'>$</span>posterior<span class='p'>[</span>results<span class='o'>$</span>posterior <span class='o'>&gt;=</span> <span class='m'>0.5</span><span class='p'>]</span> <span class='o'>&lt;-</span> <span class='s'>&quot;FAIR&quot;</span>
+results<span class='o'>$</span>posterior<span class='p'>[</span>results<span class='o'>$</span>posterior <span class='o'>&lt;</span> <span class='m'>0.5</span><span class='p'>]</span> <span class='o'>&lt;-</span> <span class='s'>&quot;LOADED&quot;</span>
+<span class='c1'># Check out results</span>
+table<span class='p'>(</span>results<span class='o'>$</span>dice<span class='p'>)</span>
+table<span class='p'>(</span>results<span class='o'>$</span>viterbi<span class='p'>)</span>
+table<span class='p'>(</span>results<span class='o'>$</span>posterior<span class='p'>)</span>
+</code></pre></div>
+<p>Our simulation resulted in 2012 fair dice rolls and 988 loaded dice rolls, with a model accuracy of 90.97% for the Viterbi algorithm and 95.43% for posterior probabilities.</p>
+
+<h3 id='visualization'>Visualization</h3>
+
+<p>Accuracy alone doesn&#8217;t tell the full story. Let&#8217;s visualize our sequence predictions to see how they compare to the true sequence. In the following plot, the true sequence is given at the top, and the two following sequences are our predictions. The red points in the prediction plots represent wrong predictions.</p>
+<div class='highlight'><pre><code class='r'><span class='c1'>### Plot predictions with true sequence</span>
+p1 <span class='o'>&lt;-</span> ggplot<span class='p'>(</span>aes<span class='p'>(</span>x <span class='o'>=</span> seq_along<span class='p'>(</span>dice<span class='p'>)),</span> data <span class='o'>=</span> results<span class='p'>)</span> <span class='o'>+</span>
+      geom_point<span class='p'>(</span>aes<span class='p'>(</span>y <span class='o'>=</span> dice<span class='p'>))</span> <span class='o'>+</span> 
+      ylab<span class='p'>(</span><span class='s'>&quot;State&quot;</span><span class='p'>)</span> <span class='o'>+</span> xlab<span class='p'>(</span><span class='s'>&quot;Dice Roll (In Sequence)&quot;</span><span class='p'>)</span> <span class='o'>+</span> ylab<span class='p'>(</span><span class='s'>&quot;State&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+      ggtitle<span class='p'>(</span><span class='s'>&quot;Actual Results&quot;</span><span class='p'>)</span>
+
+p2 <span class='o'>&lt;-</span> ggplot<span class='p'>(</span>aes<span class='p'>(</span>x <span class='o'>=</span> seq_along<span class='p'>(</span>dice<span class='p'>)),</span> data <span class='o'>=</span> results<span class='p'>)</span> <span class='o'>+</span>
+        geom_point<span class='p'>(</span>aes<span class='p'>(</span>y <span class='o'>=</span> dice<span class='p'>),</span> color <span class='o'>=</span> <span class='s'>&quot;#F8766D&quot;</span><span class='p'>)</span> <span class='o'>+</span> 
+        geom_point<span class='p'>(</span>aes<span class='p'>(</span>y <span class='o'>=</span> viterbi<span class='p'>),</span> color <span class='o'>=</span> <span class='s'>&quot;#00BFC4&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+        xlab<span class='p'>(</span><span class='s'>&quot;Dice Roll (In Sequence)&quot;</span><span class='p'>)</span> <span class='o'>+</span> ylab<span class='p'>(</span><span class='s'>&quot;State&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+        ggtitle<span class='p'>(</span><span class='s'>&quot;Viterbi Predictions&quot;</span><span class='p'>)</span>
+
+p3 <span class='o'>&lt;-</span> ggplot<span class='p'>(</span>aes<span class='p'>(</span>x <span class='o'>=</span> seq_along<span class='p'>(</span>dice<span class='p'>)),</span> data <span class='o'>=</span> results<span class='p'>)</span> <span class='o'>+</span>
+      geom_point<span class='p'>(</span>aes<span class='p'>(</span>y <span class='o'>=</span> dice<span class='p'>),</span> color <span class='o'>=</span> <span class='s'>&quot;#F8766D&quot;</span><span class='p'>)</span> <span class='o'>+</span> 
+      geom_point<span class='p'>(</span>aes<span class='p'>(</span>y <span class='o'>=</span> posterior<span class='p'>),</span> color <span class='o'>=</span> <span class='s'>&quot;#00BFC4&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+      xlab<span class='p'>(</span><span class='s'>&quot;Dice Roll (in sequence)&quot;</span><span class='p'>)</span> <span class='o'>+</span> ylab<span class='p'>(</span><span class='s'>&quot;State&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+      ggtitle<span class='p'>(</span><span class='s'>&quot;Posterior Predictions&quot;</span><span class='p'>)</span>
+
+grid.arrange<span class='p'>(</span>p1<span class='p'>,</span> p2<span class='p'>,</span> p3<span class='p'>,</span> ncol <span class='o'>=</span> <span class='m'>1</span><span class='p'>)</span>
+</code></pre></div>
+<p><img alt='hmm-vis' src='/images/hmm_vis.png' /></p>
+
+<p>Both prediction methods seem to model the known states pretty well, at least capturing the major trends. Finally, we can also take a peek at our posterior probabilities.</p>
+<div class='highlight'><pre><code class='r'><span class='c1'>### Posterior probabilities</span>
+<span class='c1'># Calculate Posterior probabilities for dice, save as new column</span>
+results<span class='o'>$</span>posterior_probabilities <span class='o'>&lt;-</span> posterior<span class='p'>(</span>hmm<span class='p'>,</span> obs<span class='p'>)[</span><span class='m'>1</span><span class='p'>,</span> <span class='p'>]</span>
+rects <span class='o'>&lt;-</span> data.frame<span class='p'>(</span>ymin <span class='o'>=</span> c<span class='p'>(</span><span class='m'>0</span><span class='p'>,</span> <span class='m'>0.5</span><span class='p'>),</span> ymax <span class='o'>=</span> c<span class='p'>(</span><span class='m'>0.5</span><span class='p'>,</span> <span class='m'>1</span><span class='p'>),</span> Prediction <span class='o'>=</span> c<span class='p'>(</span><span class='s'>&quot;Tails&quot;</span><span class='p'>,</span> <span class='s'>&quot;Heads&quot;</span><span class='p'>))</span>
+<span class='c1'># Plot posterior probabilities</span>
+ggplot<span class='p'>()</span> <span class='o'>+</span> 
+  geom_rect<span class='p'>(</span>data <span class='o'>=</span> rects<span class='p'>,</span> aes<span class='p'>(</span>xmin <span class='o'>=</span> <span class='o'>-</span><span class='kc'>Inf</span><span class='p'>,</span> xmax <span class='o'>=</span> <span class='kc'>Inf</span><span class='p'>,</span> ymin <span class='o'>=</span> ymin<span class='p'>,</span> ymax <span class='o'>=</span> ymax<span class='p'>,</span> fill <span class='o'>=</span> Prediction<span class='p'>),</span> alpha <span class='o'>=</span> <span class='m'>0.2</span><span class='p'>)</span> <span class='o'>+</span>
+  geom_line<span class='p'>(</span>data <span class='o'>=</span> results<span class='p'>,</span> aes<span class='p'>(</span>x <span class='o'>=</span> seq_along<span class='p'>(</span>dice<span class='p'>),</span> y <span class='o'>=</span> posterior_probabilities<span class='p'>),</span> color <span class='o'>=</span> <span class='s'>&quot;grey&quot;</span><span class='p'>,</span> size <span class='o'>=</span> <span class='m'>0.7</span><span class='p'>)</span> <span class='o'>+</span>
+  geom_point<span class='p'>(</span>data <span class='o'>=</span> results<span class='p'>,</span> aes<span class='p'>(</span>x <span class='o'>=</span> seq_along<span class='p'>(</span>dice<span class='p'>),</span> y <span class='o'>=</span> posterior_probabilities<span class='p'>),</span> stat <span class='o'>=</span> <span class='s'>&quot;identity&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+  ggtitle<span class='p'>(</span><span class='s'>&quot;Posterior Probabilities&quot;</span><span class='p'>)</span> <span class='o'>+</span>
+  xlab<span class='p'>(</span><span class='s'>&quot;Dice Roll (In Sequence)&quot;</span><span class='p'>)</span> <span class='o'>+</span> 
+  ylab<span class='p'>(</span><span class='s'>&quot;Probability of Heads&quot;</span><span class='p'>)</span>
+</code></pre></div>
+<p><img alt='hmm_posterior' src='/images/hmm_posterior.png' /></p>

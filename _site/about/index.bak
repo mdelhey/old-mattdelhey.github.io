@@ -3,7 +3,7 @@
 <head>
 
   <meta charset="UTF-8">
-  <title>Archives</title>
+  <title>About</title>
   <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
@@ -49,48 +49,12 @@
 
 
     <div id="content">
-      <div id="blog-archives">
+      This is where you would but a short bio, and/or a description of your site. It also serves as an example of how to set up a standalone page. For example:
 
-	
-		<article class="post">
-			
-				<h1><a href="/2013/08/11/hidden-markov-models/">Simulating Hidden Markov Chains using R</a></h1>
-			
-		</article>
-	
-		<article class="post">
-			
-				<h1><a href="/2013/07/15/a-more-concrete-derrida/">A (More) Concrete Derrida</a></h1>
-			
-		</article>
-	
-		<article class="post">
-			
-				<h1><a href="/2013/02/01/reconstructing-minards-march/">Reconstructing Napoleon's Failed March to Russia</a></h1>
-			
-		</article>
-	
-		<article class="post">
-			
-				<h1><a href="/2013/01/13/ufo/">A Quick Look At UFO Reports Across the U.S.</a></h1>
-			
-		</article>
-	
-		<article class="post">
-			
-				<h1><a href="/2013/01/10/kaggle-excel-in-r/">Kaggle: Getting Started with Excel -- In R</a></h1>
-			
-		</article>
-	
-		<article class="post">
-			
-				<h1><a href="/2013/01/01/basic-fern/">Basic Python: Creating a Fern</a></h1>
-			
-		</article>
-	
+<img src="/images/shakespeare.png" class="right" />
+**William Shakespeare** (26 April 1564 – 23 April 1616) was an English poet and playwright, widely regarded as the greatest writer in the English language and the world's pre-eminent dramatist. He is often called England's national poet and the "Bard of Avon". His extant works, including some collaborations, consist of about 38 plays, 154 sonnets, two long narrative poems, and a few other verses, the authorship of some of which is uncertain. His plays have been translated into every major living language and are performed more often than those of any other playwright.
 
-</div>
-
+Shakespeare was born and brought up in Stratford-upon-Avon. At the age of 18, he married Anne Hathaway—no, not *that* Anne Hathaway—with whom he had three children.
     </div>
 
 
