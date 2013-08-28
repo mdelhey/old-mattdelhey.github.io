@@ -4,3 +4,5 @@ Personal blog created with jekyll using a slightly modified solarized theme by [
 Originally hosted using Ruhoh and themed by modifiying dinky, which can be found at [github.com/mattdelhey/mattdelhey.ruhoh.com](https://github.com/mattdelhey/mattdelhey.ruhoh.com/).
 
 Questions can be directed to [matt.delhey@rice.edu](mailto:matt.delhey@rice.edu).
+
+$\frac{1}{n}
