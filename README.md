@@ -5,4 +5,4 @@ Originally hosted using Ruhoh and themed by modifiying dinky, which can be found
 
 Questions can be directed to [matt.delhey@rice.edu](mailto:matt.delhey@rice.edu).
 
-$\frac{1}{n}
+
