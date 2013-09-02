@@ -28,8 +28,6 @@ table {
 	border-spacing: 0;
 }
 
-
-
 /*** Basics ***/
 body {
 	font-family: Verdana, serif;
@@ -104,6 +102,8 @@ h3 {
 .img-middle { vertical-align: middle; }
 .nopadding { padding: 0; }
 .nounderline { text-decoration: underline; }
+
+.folder { font-size: 8px; }
 
 
 

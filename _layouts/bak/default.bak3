@@ -36,17 +36,14 @@
           <li><a href="/">home</a></li>
           <li><a href="/about">about</a></li>
           <li><a href="/projects">projects</a></li>
-
-	  <br />
-	  <li class="folder">/<a href="/music">music</a></li>
-	  <li class="folder">/<a href="/essays">essays</a></li>
-	  <li class="folder">/<a href="/notes">notes</a></li>
-	  
-	  <br />
-	  <li><a href="http://github.com/mattdelhey"><img src="{{ site.url }}/images/github.png" height=18 width=18 /></a></li>
-	  <li><a href="http://facebook.com/mattdelhey"><img src="{{ site.url }}/images/facebook.png" height=18 width=18 /></a></li>
-	  <li><a href="http://twitter.com/mattdelhey"><img src="{{ site.url }}/images/twitter.png" height=18 width=18 /></a></li>
-	  <li><a href="http://linkedin.com/mattdelhey"><img src="{{ site.url }}/images/linkedin.png" height=18 width=18 /></a></li>
+          <li><a href="/archives">archive</a></li>
+    
+          <li><a href="/music">music</a> / <a href="/essays">essays</a> / <a href="/notes">notes</a></li>
+    
+	  <li><a href="http://github.com/mattdelhey">github</a></li>
+	  <li><a href="http://facebook.com/mattdelhey">facebook</a></li>
+          <li><a href="http://twitter.com/mattdelhey">twitter</a></li>
+	  <li><a href="http://linkedin.com/mattdelhey">linkedin</a></li>
         </ul>
       </nav>
     </div>
