@@ -3,7 +3,7 @@ name: matt delhey
 description: man is spirit. but what is spirit?
 
 permalink: /:year/:month/:day/:title/
-paginate: 10
+paginate: 2
 pygments: true
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']

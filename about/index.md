@@ -10,7 +10,7 @@ Hi, my name is Matt Delhey (shocker, I know). I'm a student at Rice University s
 I can be hailed at [matt.delhey@rice.edu](mailto:matt.delhey@rice.edu).
 
 ### About that tagline... ###
-It's supposed to be a joke. It comes from the first lines of Kierkegaard's 'The Sickness Unto Death':
+It's supposed to be a joke. It comes from the first lines of Kierkegaard's _The Sickness Unto Death_:
 
 > Man is spirit. But what is spirit? Spirit is the self. But what is the self? 
 > The self is a relation which relates itself to its own self, or it is that in the relation 
