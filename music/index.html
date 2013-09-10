@@ -4,13 +4,13 @@ title: 'matt delhey: music'
 ---
 
 {% for post in site.posts %}
-  {% if post.category == 'music' %}
+{% if post.category == 'music' %}
 	<article class="post">
 	  <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
 	    <div class="post-content">{{ post.content }}</div>
 	    <hr />
 	</article>
-  {% endif %}
+{% endif %}
 {% endfor %}
 
 

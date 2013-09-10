@@ -3,6 +3,8 @@ title : 'about'
 layout: default
 
 ---
+# about
+
 <img src="{{ site.url }}/images/slim.png" class="profile" />
 
 Hi, my name is Matt Delhey (shocker, I know). I'm a student at Rice University studying statistics and philosophy. I do data science and write about it, among other things. 
