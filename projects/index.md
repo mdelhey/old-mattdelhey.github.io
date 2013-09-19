@@ -1,13 +1,13 @@
 ---
 layout: default
-title: 'matt delhey: music'
+title: 'md: projects'
 
 ---
 # projects #
+* Stat 450: Statistical Design in Practice
+
 * __[esther-data]()__
 * __[kaggle-titanic]()__
-* Tripadvisor Projects
-  * ###[ta projects](welp.com)
 * Stat405: Introduction to Data Analysis
   * ###[Analysis of Texas Public High School Rankings and Standardized Exam Scores for 2011]()
   * ###[Obama for America 2012: A Sentiment Analysis]()
