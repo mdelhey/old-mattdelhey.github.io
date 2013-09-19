@@ -20,7 +20,7 @@
 
 
   <header id="header">
-    <img src="/images/small_rounded.png" class="profile_pic" /><h1><a href="/">matt delhey</a></h1>
+    <img src="http://mattdelhey.com/images/small_rounded.png" class="profile_pic" /><h1><a href="/">matt delhey</a></h1>
     <p>man is spirit. but what is spirit?</p>
   </header>
 
@@ -43,10 +43,10 @@
 	  <li class="folder">/<a href="/notes">notes</a></li>
 	  
 	  <br />
-	  <li><a href="http://github.com/mattdelhey"><img src="/images/github.png" height=18 width=18 /></a></li>
-	  <li><a href="http://facebook.com/delhey"><img src="/images/facebook.png" height=18 width=18 /></a></li>
-	  <li><a href="http://twitter.com/mattdelhey"><img src="/images/twitter.png" height=18 width=18 /></a></li>
-	  <li><a href="http://linkedin.com/in/mattdelhey"><img src="/images/linkedin.png" height=18 width=18 /></a></li>
+	  <li><a href="http://github.com/mattdelhey"><img src="http://mattdelhey.com/images/github.png" height=18 width=18 /></a></li>
+	  <li><a href="http://facebook.com/delhey"><img src="http://mattdelhey.com/images/facebook.png" height=18 width=18 /></a></li>
+	  <li><a href="http://twitter.com/mattdelhey"><img src="http://mattdelhey.com/images/twitter.png" height=18 width=18 /></a></li>
+	  <li><a href="http://linkedin.com/in/mattdelhey"><img src="http://mattdelhey.com/images/linkedin.png" height=18 width=18 /></a></li>
         </ul>
       </nav>
     </div>
@@ -82,7 +82,7 @@ test <span class='o'>&lt;-</span> read.csv<span class='p'>(</span><span class='s
 
 <h3 id='sex'>Sex</h3>
 
-<p>Does one&#8217;s gender tell us anything about their likelihood of surviving? This seems intuitive, so let&#8217;s ask the data. Using <em>ggplot2</em> we can quickly look at a bar-graph illustrating who survived based on sex. <img alt='excel-sex' src='/images/excel-sex.png' /> Notice that if a passenger is female they are much more likely to survive than if they are a male. Using simple algebra in R, we can see that females have about a 74% survival rate while males have about a 19% survival rate.</p>
+<p>Does one&#8217;s gender tell us anything about their likelihood of surviving? This seems intuitive, so let&#8217;s ask the data. Using <em>ggplot2</em> we can quickly look at a bar-graph illustrating who survived based on sex. <img alt='excel-sex' src='http://mattdelhey.com/images/excel-sex.png' /> Notice that if a passenger is female they are much more likely to survive than if they are a male. Using simple algebra in R, we can see that females have about a 74% survival rate while males have about a 19% survival rate.</p>
 
 <p>So let&#8217;s create a very simple model: we will predict that if a passenger is female, then they will survive and if a passenger is male, then they will not survive. In order to make our prediction, we have to first enter in our survived values into the test data frame and then save it to a new csv file. The test csv file is then uploaded directly Kaggle as a submission of our model. All of this is easy in R.</p>
 <div class='highlight'><pre><code class='r'><span class='c1'># Look at proportion of survival by sex</span>
@@ -103,7 +103,7 @@ write.csv<span class='p'>(</span>test<span class='p'>,</span> <span class='s'>&q
 </code></pre></div>
 <h3 id='age'>Age</h3>
 
-<p>So we recognize that gender plays an important role in predicting survivability, but what about age? To make things easier, let&#8217;s divide age into two groups: adult (age &gt;18) and child (age &lt;=18). Once again, this seems to match our intuitions on who might survive, but let&#8217;s check it out using the same style bar-graph. <img alt='excel-age' src='/images/excel-age.png' /> Notice that I also kept the sex variable represented as color. We can see that children were more likely to survive than adults. Just as interestingly, we see the same gender patter where females are more likely to survive than males. Through calculation we can see that about 78% of female adults survived while only about 18% of male adults survived. The Getting Started Guide argues that this indicates that the age variable isn&#8217;t telling us much more additional information than the sex variable, so we ignore it for now. The proportion calculation in the R code is a little tricky to understand, but basically we have to ensure that we do not include NA&#8217;s (which there are quite a few of) in our percentage.</p>
+<p>So we recognize that gender plays an important role in predicting survivability, but what about age? To make things easier, let&#8217;s divide age into two groups: adult (age &gt;18) and child (age &lt;=18). Once again, this seems to match our intuitions on who might survive, but let&#8217;s check it out using the same style bar-graph. <img alt='excel-age' src='http://mattdelhey.com/images/excel-age.png' /> Notice that I also kept the sex variable represented as color. We can see that children were more likely to survive than adults. Just as interestingly, we see the same gender patter where females are more likely to survive than males. Through calculation we can see that about 78% of female adults survived while only about 18% of male adults survived. The Getting Started Guide argues that this indicates that the age variable isn&#8217;t telling us much more additional information than the sex variable, so we ignore it for now. The proportion calculation in the R code is a little tricky to understand, but basically we have to ensure that we do not include NA&#8217;s (which there are quite a few of) in our percentage.</p>
 <div class='highlight'><pre><code class='r'><span class='c1'># Improve the prediction by considering Age</span>
 adult <span class='o'>&lt;-</span> train<span class='o'>$</span>age <span class='o'>&gt;</span> <span class='m'>18</span>
 child <span class='o'>&lt;-</span> train<span class='o'>$</span>age <span class='o'>&lt;=</span> <span class='m'>18</span>
@@ -119,7 +119,7 @@ length<span class='p'>(</span>train<span class='p'>[</span>adult <span class='o'
 </code></pre></div>
 <h3 id='passenger_class_and_ticket_fare'>Passenger Class and Ticket Fare</h3>
 
-<p>What can Passenger Class and Ticket Fare tell us about survivability, and what&#8217;s the relationship between the two? To make things easier, we can bin the ticket fares from less than $10, between $10 and $20, between $20 and $30, and greater than $30. Let&#8217;s make the same bar graph again, this time representing fare with color. <img alt='excel_pclass' src='/images/excel-pclass.png' /> There are two immediate, interesting findings in this graphic. The first is that, as we would expect, survivability decreases as class increases. But we can also see that some passengers paid very different prices for the same class, even to extent that some passengers paid more for a third class ticket than others paid for a first class ticket. If we look at just the ticket fares we find a similar story, namely that the more a passenger paid for a ticket, the more likely they were to survive.</p>
+<p>What can Passenger Class and Ticket Fare tell us about survivability, and what&#8217;s the relationship between the two? To make things easier, we can bin the ticket fares from less than $10, between $10 and $20, between $20 and $30, and greater than $30. Let&#8217;s make the same bar graph again, this time representing fare with color. <img alt='excel_pclass' src='http://mattdelhey.com/images/excel-pclass.png' /> There are two immediate, interesting findings in this graphic. The first is that, as we would expect, survivability decreases as class increases. But we can also see that some passengers paid very different prices for the same class, even to extent that some passengers paid more for a third class ticket than others paid for a first class ticket. If we look at just the ticket fares we find a similar story, namely that the more a passenger paid for a ticket, the more likely they were to survive.</p>
 <div class='highlight'><pre><code class='r'><span class='c1'># Improve the prediction by considering Passenger Class &amp; Fare</span>
 <span class='c1'># Consider Fare price by bining from &lt;10, 10-20, 20-30, &gt;30</span>
 bin.1 <span class='o'>&lt;-</span> train<span class='o'>$</span>fare <span class='o'>&lt;</span> <span class='m'>10</span>
@@ -135,7 +135,7 @@ qplot<span class='p'>(</span>factor<span class='p'>(</span>survived<span class='
 </code></pre></div>
 <h3 id='final_submission'>Final Submission</h3>
 
-<p>With this new information we want to make one final submission. The Kaggle getting started tutorial utilizes pivot tables in Excel, so the form of our predictions is proportions. We say that any cohort of passengers that have a proportion of .5 or greater will survive, and that any cohort with a proportion less than .5 will not survive. This means that we still predict all males to not survive, but also that all women in third class who paid over $20 for their ticket will not survive. Here is a final graphic demonstrating this peculiar trend and the relevant implementation of our prediction in R: <img alt='excel-female3rd' src='/images/excel-female3rd.png' /></p>
+<p>With this new information we want to make one final submission. The Kaggle getting started tutorial utilizes pivot tables in Excel, so the form of our predictions is proportions. We say that any cohort of passengers that have a proportion of .5 or greater will survive, and that any cohort with a proportion less than .5 will not survive. This means that we still predict all males to not survive, but also that all women in third class who paid over $20 for their ticket will not survive. Here is a final graphic demonstrating this peculiar trend and the relevant implementation of our prediction in R: <img alt='excel-female3rd' src='http://mattdelhey.com/images/excel-female3rd.png' /></p>
 <div class='highlight'><pre><code class='r'><span class='c1'># Make the improved genderclass-based prediction</span>
 third <span class='o'>&lt;-</span> subset<span class='p'>(</span>train<span class='p'>,</span> pclass <span class='o'>==</span> <span class='s'>&quot;3&quot;</span><span class='p'>)</span>
 qplot<span class='p'>(</span>factor<span class='p'>(</span>survived<span class='p'>),</span> data <span class='o'>=</span> third<span class='p'>,</span> fill <span class='o'>=</span> sex<span class='p'>)</span> <span class='o'>+</span> facet_wrap<span class='p'>(</span><span class='o'>~</span> fare.bin<span class='p'>)</span>

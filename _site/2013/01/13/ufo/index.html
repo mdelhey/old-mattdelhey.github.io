@@ -20,7 +20,7 @@
 
 
   <header id="header">
-    <img src="/images/small_rounded.png" class="profile_pic" /><h1><a href="/">matt delhey</a></h1>
+    <img src="http://mattdelhey.com/images/small_rounded.png" class="profile_pic" /><h1><a href="/">matt delhey</a></h1>
     <p>man is spirit. but what is spirit?</p>
   </header>
 
@@ -43,10 +43,10 @@
 	  <li class="folder">/<a href="/notes">notes</a></li>
 	  
 	  <br />
-	  <li><a href="http://github.com/mattdelhey"><img src="/images/github.png" height=18 width=18 /></a></li>
-	  <li><a href="http://facebook.com/delhey"><img src="/images/facebook.png" height=18 width=18 /></a></li>
-	  <li><a href="http://twitter.com/mattdelhey"><img src="/images/twitter.png" height=18 width=18 /></a></li>
-	  <li><a href="http://linkedin.com/in/mattdelhey"><img src="/images/linkedin.png" height=18 width=18 /></a></li>
+	  <li><a href="http://github.com/mattdelhey"><img src="http://mattdelhey.com/images/github.png" height=18 width=18 /></a></li>
+	  <li><a href="http://facebook.com/delhey"><img src="http://mattdelhey.com/images/facebook.png" height=18 width=18 /></a></li>
+	  <li><a href="http://twitter.com/mattdelhey"><img src="http://mattdelhey.com/images/twitter.png" height=18 width=18 /></a></li>
+	  <li><a href="http://linkedin.com/in/mattdelhey"><img src="http://mattdelhey.com/images/linkedin.png" height=18 width=18 /></a></li>
         </ul>
       </nav>
     </div>
@@ -64,13 +64,13 @@
 
 <p>In order to make valid cross-state comparisons, we also need to normalize the frequency of the reports by the population of each state. I accomplished this by importing U.S. census data, which contained population information for the years 2000 and 2011. I took the simple average of the two to create a rough population estimate for the decade. After a little bit of data cleaning I was able to create the following map with ggplot2:</p>
 
-<p><img alt='ufo_map' src='/images/ufo.png' /></p>
+<p><img alt='ufo_map' src='http://mattdelhey.com/images/ufo.png' /></p>
 
 <p>While this is certainly a simple graphic, we can begin to notice a pattern in the distribution of UFO reports! There appears to be three major regions of the United States that are receiving large numbers of reports. The most obvious and dense of these regions is the Northwest, which is traditionally known for being witness to some of the most unexplainable behavior in the United States (e.g. Sasquatch). We can also see a smaller region bellow in the Southwest, which might correlate to Area 51 phenomena. Finally, we see a third cluster of high-reporting states in the Northeast. Interestingly enough, we can notice that the South clearly reports the least amount of UFO&#8217;s. This graphic alone allows us to start exploring this data set for real insights.</p>
 
 <p>One thing that needs to be explained is the non-descriptive legend. This number was calculated by dividing the total number of UFO reports in each state over the entire decade divided by the state&#8217;s population. Therefore we can interpret the number as saying the average number of UFO reports over the decade submitted per person in that state. For example, Washington has the highest distribution of UFO reports at 4e^(-4), which is about 0.0732626 for those of you keeping track at home. This means that, on average, about 7 out of every 100 Washington residents has reported a UFO sighting! Of course, this assumes a uniform distribution of UFO reports across state residents, which is clearly not the case. But this at least gives a better feel for what the legend in this graphic is communicating.</p>
 
-<p>Finally, I have included the full R code used to load, clean, and visualize this data. Three data sets are used: the first (ufo_awesome.tsv) coming from the links above, and <a href='/assets/census.csv&quot;'>census.csv</a> plus <a href='/assets/states.csv'>states.csv</a> which are very small and thus available on this very site. This is a rather simple example that may be of use to someone just starting out with R so you shouldn&#8217;t have any difficulties running the code.</p>
+<p>Finally, I have included the full R code used to load, clean, and visualize this data. Three data sets are used: the first (ufo_awesome.tsv) coming from the links above, and <a href='http://mattdelhey.com/assets/census.csv&quot;'>census.csv</a> plus <a href='http://mattdelhey.com/assets/states.csv'>states.csv</a> which are very small and thus available on this very site. This is a rather simple example that may be of use to someone just starting out with R so you shouldn&#8217;t have any difficulties running the code.</p>
 <div class='highlight'><pre><code class='r'><span class='c1'># Goal: Create a heatmap of UFO reports across the USA from 2000 to 2010</span>
 library<span class='p'>(</span>ggplot2<span class='p'>)</span>
 library<span class='p'>(</span>lubridate<span class='p'>)</span>
