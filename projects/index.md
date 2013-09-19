@@ -7,7 +7,7 @@ title: 'matt delhey: projects'
 * Stat 450: Statistical Design in Practice
   * Data Integration
 * Stat 640: Statistical Learning & Data Mining
-  * Kaggle Competition: Movie Recommender
+  * [Movie Recommender (in-class Kaggle data mining competition)](https://inclass.kaggle.com/c/movie-recommendations)
 * __[esther-data]()__
 * __[kaggle-titanic]()__
 * Stat 405: Introduction to Data Analysis
