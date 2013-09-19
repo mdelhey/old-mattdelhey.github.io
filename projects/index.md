@@ -1,9 +1,9 @@
 ---
 layout: default
-title: 'md: projects'
+title: 'matt delhey: projects'
 
 ---
-# projects #
+# Projects #
 * Stat 450: Statistical Design in Practice
 
 * __[esther-data]()__

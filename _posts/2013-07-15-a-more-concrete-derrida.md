@@ -6,7 +6,7 @@ date:  2013-07-15
 ---
 I feel that Derrida gets a bad reputation as overly unapproachable among analytically-bent philosophy students that I've talked to. For various reason, his texts are often critiqued as being unnecessarily obtuse, perhaps, they say, to cover up the fact that he's not saying much at all. I don't want to say that this isn't true, but as I finish up my reading of "The Gift of Death" I've come across various passages that have Derrida talking in a very concrete, vivid and pragmatic manner. 
 
-In fact, these cases when Derrida takes his arguments to some of their specific instantiations end up being some of my favorite moments in his book. But after re-reading what I've written here, perhaps it's not as concrete as I'd thought, so instead a _more_ concrete Derrida. Here's what I'm talking about:
+In fact, these cases when Derrida takes his arguments to some of their specific instantiations end up being some of my favorite moments in his book. But after re-reading what I've written here, perhaps it's not as concrete as I'd thought and so instead a _more_ concrete Derrida. Here's what I'm talking about:
 
 > "In terms of the moral of morality, let us here insist upon what is too often forgotten
 > by the moralizing moralists and good consciences who preach to us with assurance every 
