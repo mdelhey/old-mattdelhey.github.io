@@ -6,4 +6,7 @@ permalink: /:year/:month/:day/:title/
 paginate: 20
 pygments: true
 
+provider: google
+tracking_id: 'UA-36824837-1'
+
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
