@@ -13,13 +13,13 @@ Consider a casino which uses a fair die most of the time, but occasionally they 
 
 Here we can see that we're dealing with a simple, two-state HMM with the following transition probability and emission probability matrices:
 
-TPM =    [.95  .05]
+`TPM = [.95  .05]` <br />
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`[.10  .90]`
+	   
+<br />
 
-         [.10  .90]
-            1     2    3     4     5     6
-EPM =  F [1/6   1/6   1/6   1/6   1/6   1/6]
-
-       L [1/10  1/10  1/10  1/10  1/10  1/2]
+`EPM =  F [1/6   1/6   1/6   1/6   1/6   1/6]` <br />
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`L [1/10  1/10  1/10  1/10  1/10  1/2]`
 
 I also took the time to create the following "graphic" of the process:
 
