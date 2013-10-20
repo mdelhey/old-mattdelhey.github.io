@@ -24,7 +24,7 @@ I take it as a joke. The quip comes from the first lines of Kierkegaard's _The S
 > eternal, of freedom and necessity, in short it is a synthesis. A synthesis is a relation between two factors.
 > So regarded, man is not yet a self.
 
-I take it that Kierkegaard is poking fun at that kind of obtuse Hegelian language often associated with academic philosophy. But at the same time S.K. is making an important point regarding the despairing difference between man and himself. 
+I take it that Kierkegaard is poking fun at that kind of obtuse Hegelian language often associated with academic philosophy. But at the same time S.K. is making an important point regarding the despairing difference between man and selfhood. 
 
 ### Music ###
 I like music ([sometimes I don't](http://www.youtube.com/watch?v=MFeS0VstOdE)). I collect CD and Vinyl as well as spin things as a DJ at KTRU, the on-campus radio station here at Rice. I think live shows are overrated. Currently I'm trying to learn guitar and harmonica. I listen to a lot of music: [RateYourMusic](http://rateyourmusic.com/~apy) or [Last.fm](http://www.last.fm/user/mattdelhey).
