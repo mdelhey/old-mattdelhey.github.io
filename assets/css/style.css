@@ -238,10 +238,12 @@ img.center {
 		width: 100%;
 		left: 0;
 		margin: 10px 10px 20px 10px;
+		display: none;
 	}
 
 	#sidebar nav select.mnav {
 		display: block;
+		display: none;
 		margin-bottom: 15px;
 	}
 
