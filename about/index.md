@@ -14,7 +14,7 @@ Hi there, my name is Matt Delhey and I'm an undergrad at Rice University studyin
 * email: [matt.delhey@rice.edu](mailto:matt.delhey@rice.edu)
 
 ### About that tagline... ###
-I take it as a joke. The quip comes from the first lines of Kierkegaard's _The Sickness Unto Death_:
+I'm not sure. The epitaph comes from the first lines of Kierkegaard's _The Sickness Unto Death_:
 
 > Man is spirit. But what is spirit? Spirit is the self. But what is the self? 
 > The self is a relation which relates itself to its own self, or it is that in the relation 
@@ -24,7 +24,7 @@ I take it as a joke. The quip comes from the first lines of Kierkegaard's _The S
 > eternal, of freedom and necessity, in short it is a synthesis. A synthesis is a relation between two factors.
 > So regarded, man is not yet a self.
 
-I take it that Kierkegaard is poking fun at that kind of obtuse Hegelian language often associated with academic philosophy. But at the same time S.K. is making an important point regarding the despairing difference between man and selfhood. 
+I've heard that this is Kierkegaard poking fun at that kind of obtuse Hegelian language often associated with academic philosophy. But S.K. is also making some point regarding the despairing difference between man and selfhood. 
 
 ### Music ###
 I like music ([sometimes I don't](http://www.youtube.com/watch?v=MFeS0VstOdE)). I collect CD and Vinyl as well as spin things as a DJ at KTRU, the on-campus radio station here at Rice. I think live shows are overrated. Currently I'm trying to learn guitar and harmonica. I listen to a lot of music: [RateYourMusic](http://rateyourmusic.com/~apy) or [Last.fm](http://www.last.fm/user/mattdelhey).
