@@ -5,7 +5,7 @@ layout: default
 ---
 # About
 
-<!-- <img src="{{ site.url }}/images/slim.png" class="profile" /> -->
+<img src="{{ site.url }}/images/slim.png" class="profile" />
 
 
 Hi there, my name is Matt Delhey and I'm an undergrad at Rice University studying statistics and philosophy. I do data science and write about it, among other things. 
