@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <title>matt delhey: about</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="/assets/css/style.css" rel="stylesheet" />
+  <link href="/assets/css/colors-dark.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+
+  <header id="header">
+    <img src="http://mattdelhey.com/images/small_rounded.png" class="profile_pic" /><h1><a href="/">matt delhey</a></h1>
+    <p>man is spirit. but what is spirit?</p>
+  </header>
+
+
+
+  <div id="page">
+
+
+
+    <div id="sidebar">
+      <nav>
+        <ul>
+          <li><a href="/">home</a></li>
+          <li><a href="/about">about</a></li>
+          <li><a href="/projects">projects</a></li>
+
+	  <br />
+	  <li class="folder">/<a href="/music">music</a></li>
+	  <li class="folder">/<a href="/essays">essays</a></li>
+	  <li class="folder">/<a href="/notes">notes</a></li>
+	  
+	  <br />
+	  <li><a href="http://github.com/mattdelhey"><img src="http://mattdelhey.com/images/github.png" height=18 width=18 /></a></li>
+	  <li><a href="http://facebook.com/delhey"><img src="http://mattdelhey.com/images/facebook.png" height=18 width=18 /></a></li>
+	  <li><a href="http://twitter.com/mattdelhey"><img src="http://mattdelhey.com/images/twitter.png" height=18 width=18 /></a></li>
+	  <li><a href="http://linkedin.com/in/mattdelhey"><img src="http://mattdelhey.com/images/linkedin.png" height=18 width=18 /></a></li>
+        </ul>
+      </nav>
+    </div>
+
+
+
+    <div id="content">
+      # About
+
+<img src="http://mattdelhey.com/images/slim.png" class="profile" />
+
+
+Hi there, my name is Matt Delhey and I'm an undergrad at Rice University studying statistics and philosophy. I do data science and write about it, among other things. 
+
+* resume: [mattdelhey.com/resume](http://mattdelhey.com/resume/resume.pdf)
+* email: [matt.delhey@rice.edu](mailto:matt.delhey@rice.edu)
+
+### About that tagline... ###
+I'm not sure. The epitaph comes from the first lines of Kierkegaard's _The Sickness Unto Death_:
+
+> Man is spirit. But what is spirit? Spirit is the self. But what is the self? 
+> The self is a relation which relates itself to its own self, or it is that in the relation 
+> [which accounts for it] that the relation relates itself to its own self;
+> the self is not the relation but [consists in the fact] that the relation relates itself to
+> its own self. Man is a synthesis of the infinite and the finite, of the temporal and the
+> eternal, of freedom and necessity, in short it is a synthesis. A synthesis is a relation between two factors.
+> So regarded, man is not yet a self.
+
+I've heard that this is Kierkegaard poking fun at that kind of obtuse Hegelian language often associated with academic philosophy. But S.K. is also making some point regarding the despairing difference between man and selfhood. 
+
+### Music ###
+I like music ([sometimes I don't](http://www.youtube.com/watch?v=MFeS0VstOdE)). I collect CD and Vinyl as well as spin things as a DJ at KTRU, the on-campus radio station here at Rice. I think live shows are overrated. Currently I'm trying to learn guitar and harmonica. I listen to a lot of music: [RateYourMusic](http://rateyourmusic.com/~apy) or [Last.fm](http://www.last.fm/user/mattdelhey).
+
+__I even run a small music blog__: [mattdelhey.com/music](http://mattdelhey.com/music)
+
+
+### Philosophy ###
+My study of philosophy is epiphenomenal to my interest in data science, like a hobby you can take classes in. I study philosophy for its own sake (whatever that may be...) and do not see it pragmatic. I definitely plan on writing some philosophy blog posts but I'm not sure which direction I'm going to take them. I'm a big fan of [Philosophy Bites](http://www.philosophybites.com/). Perhaps expect a response to an interview there?
+
+I've also uploaded [my (bad) undergraduate essays in philosophy](http://mattdelhey.com/essays).
+
+### Notes ###
+[Class notes](http://mattdelhey.com/notes) from selected undergraduate courses in statistics and philosophy.
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <footer id="footer">
+    <p class="copyright">Copyright &copy; 2013 <a href="mailto:matt.delhey@rice.edu">matt.delhey@rice.edu</a>. Powered by <a href="http://jekyllrb.com">Jekyll</a>.</p>
+  </footer>
+
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="/assets/js/jquery.mobilemenu.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('#sidebar nav ul').mobileMenu({'topOptionText': 'Menu', 'prependTo': '#sidebar nav'});
+    });
+  </script>
+
+
+
+</body>
+</html>
