@@ -9,7 +9,7 @@ The following are notes taken from lecture and course materials in some of my un
 	<li>Stat 310: Intro to Probability and Mathematical Statistics (<a href="{{urls.media}}/stat310slides.rar"><strong>Lecture slides</strong></a>)</li>
 	<li><a href="https://gist.github.com/af0d8f272a0ff1005127">Stat 405: Intro to Data Analysis</a> (<a href="{{urls.media}}/stat405slides.rar"><strong>Lecture slides</strong></a>)</li>
 	<li>Stat 410: Intro to Regression and Statistical Computing (<a href="{{urls.media}}/stat410slides.rar"><strong>Lecture slides</strong></a>)</li>
-	<li>Stat 640: Statistical Learning (<a href="http://www.stat.rice.edu/~gallen/stat640.html">Lecture outlines/code</a>)</li>
+	<li>Stat 640: Statistical Learning (<a href="http://www.stat.rice.edu/~gallen/stat640.html"><strong>Lecture outlines/code</strong></a>)</li>
 </ul>
 ###Philosophy
 <ul>
