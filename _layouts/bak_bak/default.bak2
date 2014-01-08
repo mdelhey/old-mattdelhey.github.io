@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="/assets/css/style.css" rel="stylesheet" />
+  <link href="/assets/css/colors-dark.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+
+  <header id="header">
+    <h1><a href="/">{{ site.name }}</a></h1>
+    <p>{{ site.description }}</p>
+  </header>
+
+
+
+  <div id="page">
+
+
+
+    <div id="sidebar">
+      <nav>
+        <ul>
+          <li><a href="/">home</a></li>
+          <li><a href="/about">about</a></li>
+          <li><a href="/projects">projects</a></li>
+          <li><a href="/archives">archive</a></li>
+    <hr />
+          <li><a href="/music">music</a></li>
+          <li><a href="/essays">essays</a></li>
+          <li><a href="/notes">notes</a><li>
+    <hr />
+	  <li><a href="http://github.com/mattdelhey">github</a></li>
+	  <li><a href="http://facebook.com/mattdelhey">facebook</a></li>
+          <li><a href="http://twitter.com/mattdelhey">twitter</a></li>
+	  <li><a href="http://linkedin.com/mattdelhey">linkedin</a></li>
+        </ul>
+      </nav>
+    </div>
+
+
+
+    <div id="content">
+      {{ content }}
+    </div>
+
+
+
+  </div>
+
+
+
+  <footer id="footer">
+    <p class="copyright">Copyright &copy; {{ site.time | date: '%Y' }} <a href="mailto:matt.delhey@rice.edu">matt.delhey@rice.edu</a>. Powered by <a href="http://jekyllrb.com">Jekyll</a>.</p>
+  </footer>
+
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="/assets/js/jquery.mobilemenu.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('#sidebar nav ul').mobileMenu({'topOptionText': 'Menu', 'prependTo': '#sidebar nav'});
+    });
+  </script>
+
+
+
+</body>
+</html>
