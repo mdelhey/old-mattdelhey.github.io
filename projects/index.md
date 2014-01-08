@@ -3,18 +3,32 @@ layout: default
 title: 'matt delhey: projects'
 
 ---
-# Projects #
-Warning: Work in progress!
+# Projects (Work in Progress!)#
+<ul>
+  <li>Stat 640: Statistical Learning &amp; Data Mining
+    <ul>
+      <li><a href="https://inclass.kaggle.com/c/movie-recommendations">Movie Recommender (in-class Kaggle data mining competition)</a></li>
+    </ul>
+  </li>
 
-* Stat 450: Statistical Design in Practice
-* Stat 640: Statistical Learning & Data Mining
+  <li>Stat 405: Introduction to Data Analysis
+    <ul>
+	  <li>Analysis of Texas Public High School Rankings and Standardized Exam Scores for 2011</li>
+	  <li>Obama for America 2012: A Sentiment Analysis</li>
+	  <li>The Effects of Technology on the Guzzler Tax and the Fuel Economy of American, German, and Japanese Cars</li>
+    </ul>
+  </li>
 
-  * [Movie Recommender (in-class Kaggle data mining competition)](https://inclass.kaggle.com/c/movie-recommendations)
-* Stat 405: Introduction to Data Analysis
-  * ###[Analysis of Texas Public High School Rankings and Standardized Exam Scores for 2011]()
-  * ###[Obama for America 2012: A Sentiment Analysis]()
-  * ###[The Effects of Technology on the Guzzler Tax and the Fuel Economy of American, German, and Japanese Cars]()
-* __[kaggle-titanic](https://github.com/mattdelhey/kaggle-titanic)__
-* __[Project Euler solutions](https://github.com/mattdelhey/project_euler)__
-* __[LaTeX resume](https://github.com/mattdelhey/delhey-resume)__
-* __[Coursera: Introduction to Recommender Systems assignment solutions](https://github.com/mattdelhey/coursera-rec)__
+  <li>Kaggle - Titanic: Machine Learning from Disaster (<a href="http://www.kaggle.com/c/titanic-gettingStarted">competition link</a>)
+    <ul>
+	  <li><a href="https://github.com/mattdelhey/kaggle-titanic">Randomforest/SVM/logistic regression ensemble in R</a></li>
+	  <li><a href="https://github.com/mattdelhey/waffles-titanic">Ensemble in waffles</a> -- an interesting new ML framework in C++ w/ commandline wrapper (blog post to come)</li>
+	</ul>
+  </li>
+
+  <li><a href="https://github.com/mattdelhey/project_euler">Project Euler solutions</a></li>
+
+  <li><a href="https://github.com/mattdelhey/delhey-resume">LaTeX resume</a> (Adapted from Jason R. Blevins's <a href="http://jblevins.org/projects/cv-template/">CV template</a>)</li>
+
+  <li><a href="https://github.com/mattdelhey/coursera-rec">Coursera: Introduction to Recommender Systems assignment solutions</a></li>
+</ul>

@@ -3,7 +3,7 @@
 <head>
 
   <meta charset="UTF-8">
-  <title>The Modern Lovers - s/t (1976)</title>
+  <title>matt delhey: projects</title>
   <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
@@ -53,20 +53,26 @@
 
 
     <div id="content">
-      <article class="post">
+      # Projects #
+<ul>
+Stat 640: Statistical Learning & Data Mining
+<li>[Movie Recommender (in-class Kaggle data mining competition)](https://inclass.kaggle.com/c/movie-recommendations)</li>
+</ul>
 
-	
-		<h1><a href="/2013/03/24/the-modern-lovers/">The Modern Lovers - s/t (1976)</a></h1>
-	
+<!--
+* Stat 450: Statistical Design in Practice
 
-	<div class="post-content"><p><img alt='mlv' src='http://mattdelhey.com/images/albums/mlv.jpg' /></p>
 
-<p>Punk for lovers, if you want to put it that way. Or just a continuation of VU (produced by J. Cale nonetheless). For all their pop intentions The Modern Lovers never received due attention and are continuously looked over by otherwise well-listened hipsters of our day. This is the band’s one &amp; only LP and points to the direction punk could have gone. Richman’s vocal delivery style is laid back and heartfelt (cmon, he just want’s a girl he cares about&#8230;) which is supported with distorted guitars that I swear are sampled from White Light/White Heat. Classic tracks include Roadrunner / Pablo Picasso / Girlfriend / I’m Straight. Pablo Picasso never got called an asshole&#8230;</p>
-<!-- [download](http://www.mediafire.com/?sjurnvqpgrrxpju) --></div>
+* Stat 405: Introduction to Data Analysis
+  * ###[Analysis of Texas Public High School Rankings and Standardized Exam Scores for 2011]()
+  * ###[Obama for America 2012: A Sentiment Analysis]()
+  * ###[The Effects of Technology on the Guzzler Tax and the Fuel Economy of American, German, and Japanese Cars]()
+* __[kaggle-titanic](https://github.com/mattdelhey/kaggle-titanic)__
+* __[Project Euler solutions](https://github.com/mattdelhey/project_euler)__
+* __[LaTeX resume](https://github.com/mattdelhey/delhey-resume)__
+* __[Coursera: Introduction to Recommender Systems assignment solutions](https://github.com/mattdelhey/coursera-rec)__
+-->
 
-	<p class="meta">Posted on <span class="postdate">Mar 24, 2013</span></p>
-
-</article>
     </div>
 
 

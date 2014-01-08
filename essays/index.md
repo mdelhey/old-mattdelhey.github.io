@@ -4,6 +4,10 @@ title: 'md: essays'
 
 ---
 ###Fall 2013
+The following are a collection of essay's I've written in my undergraduate philsophy courses. I don't think any of them are worth bragging about. I've tried to include a summary of what I attempt to do in each paper.
+
+On an unrelated note, I find essays that address the most interesting philsophical questions in turn travel down and dwell within the most challening pathways for my thinking. To write analytically is much easier and so that is the form of my papers. I don't dare dwell on a philsophical questioning of actual importance because I do not have the weaponry to make any forward ground under the fire of critical examination of my reasoning (nor would it be the appropriate place even if I did). 
+
 <ul>
 	<li>
 		<a href="{{ site.url }}/essays/Spinoza-p13.pdf">Spinoza: Proposition 13, Ethics II</a>

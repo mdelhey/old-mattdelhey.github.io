@@ -33,7 +33,7 @@ __I even run a small music blog__: [mattdelhey.com/music]({{ site.url }}/music)
 
 
 ### Philosophy ###
-My study of philosophy is epiphenomenal to my interest in data science, a hobby you can great courses in. I study philosophy for its own sake (whatever that may be...) and do not see it pragmatic. I definitely plan on writing some philosophy blog posts but I'm not sure which direction I'm going to take them. I'm a big fan of [Philosophy Bites](http://www.philosophybites.com/). Perhaps expect a response to an interview there?
+My study of philosophy is epiphenomenal to my interest in data science, like a hobby you can take great courses in. I study philosophy for its own sake (whatever that may be...) and do not see it pragmatic. I definitely plan on writing some philosophy blog posts but I'm not sure which direction I'm going to take them. I'm a big fan of [Philosophy Bites](http://www.philosophybites.com/). Perhaps expect a response to an interview there?
 
 I've also uploaded [my (bad) undergraduate essays in philosophy]({{ site.url }}/essays).
 
