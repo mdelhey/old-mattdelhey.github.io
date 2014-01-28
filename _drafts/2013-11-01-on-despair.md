@@ -2,6 +2,7 @@
 layout: draft
 title: 'Despair at Willing to Be Oneself'
 date:  2013-11-01
+excerpt: welp
 
 ---
 The Sickness unto Death is an entertaining read.
